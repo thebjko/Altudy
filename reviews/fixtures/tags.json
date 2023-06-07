@@ -1,0 +1,146 @@
+[
+{
+  "model": "taggit.tag",
+  "pk": 18,
+  "fields": {
+    "name": "djikstra",
+    "slug": "djikstra"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 19,
+  "fields": {
+    "name": "다익스트라",
+    "slug": "다익스트라"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 20,
+  "fields": {
+    "name": "데이크스트라",
+    "slug": "데이크스트라"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 21,
+  "fields": {
+    "name": "재귀",
+    "slug": "재귀"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 22,
+  "fields": {
+    "name": "브루트포스",
+    "slug": "브루트포스"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 23,
+  "fields": {
+    "name": "dynamic_programming",
+    "slug": "dynamic_programming"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 24,
+  "fields": {
+    "name": "dfs",
+    "slug": "dfs"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 25,
+  "fields": {
+    "name": "동적계획법",
+    "slug": "동적계획법"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 26,
+  "fields": {
+    "name": "구현",
+    "slug": "구현"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 27,
+  "fields": {
+    "name": "implementation",
+    "slug": "implementation"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 28,
+  "fields": {
+    "name": "dp",
+    "slug": "dp"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 29,
+  "fields": {
+    "name": "유니온파인드",
+    "slug": "유니온파인드"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 30,
+  "fields": {
+    "name": "bfs",
+    "slug": "bfs"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 31,
+  "fields": {
+    "name": "크루스칼",
+    "slug": "크루스칼"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 32,
+  "fields": {
+    "name": "union_find",
+    "slug": "union_find"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 33,
+  "fields": {
+    "name": "recursion",
+    "slug": "recursion"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 34,
+  "fields": {
+    "name": "그리디",
+    "slug": "그리디"
+  }
+},
+{
+  "model": "taggit.tag",
+  "pk": 35,
+  "fields": {
+    "name": "brute_force",
+    "slug": "brute_force"
+  }
+}
+]

@@ -1,0 +1,126 @@
+#studies_list__wrapper {
+  width: 1024px;
+  padding: 0 32px;
+  margin: 50px auto 0;
+}
+
+@media screen and (max-width: 1023px) {
+  #studies_list__wrapper {
+    width: 100%;
+    max-width: 1024px;
+  }
+}
+
+#studies_list__wrapper .title {
+  font-size: var(--font-xlarge);
+  font-weight: var(--weight-bold);
+  color: var(--color-gray-7);
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.language__container, .selected_languages__container{
+  display: flex;
+  flex-flow: wrap;
+}
+
+.language-btn, .language-btn-active{
+  border: none;
+  font-size: var(--font-regular);
+  box-shadow: 2px 2px 3px var(--color-gray-3);
+  background-color: var(--color-white);
+  border-radius: 5px;
+
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.language-btn-active{
+  background-color: rgba(144, 238, 144, 0.3);
+  color: var(--color-green);
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.bi-x::before {
+  margin-left: 5px;
+  margin-top: 2px;
+  color: var(--color-gray-6);
+
+}
+.bottom-separator {
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-gray-3);
+  border-radius: 2px;
+
+  margin-top: 3px;
+  margin-bottom: 10px;
+}
+
+/* 모집중 토글 */
+.joiningToggle__container{
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+}
+
+.joiningToggel-title{
+  position: absolute;
+  top: 8px;
+  width: 80px;
+  text-align: center;
+  letter-spacing: 3px;
+  color: var(--color-gray-5);
+}
+.toggleSwitch {
+  width: 80px;
+  height: 40px;
+  display: block;
+  position: relative;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
+  cursor: pointer;
+  margin: 30px 0;
+}
+
+.toggleSwitch .toggleButton {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: var(--color-green);
+}
+
+#toggle:checked ~ .toggleSwitch {
+  background: var(--color-green);
+}
+
+#toggle:checked ~ .toggleSwitch .toggleButton {
+  left: calc(100% - 44px);
+  background: #fff;
+}
+
+.toggleSwitch, .toggleButton {
+  transition: all 0.2s ease-in;
+}
+
+/* card */
+.cardlist__container {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.card {
+  width: 22%;
+  margin: 14px ;
+}
+
+.card__content{
+  white-space: normal;
+}

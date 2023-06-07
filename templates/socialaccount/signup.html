@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<!-- 소셜 인증 후 추가정보 받는 템플릿 -->
+
+{% load socialaccount %}
+
+{% block content %}
+  <h1>signup</h1>
+  <hr>
+  <form action="{% url 'socialaccount_signup' %}" method="POST">
+    {% csrf_token %}
+    <div>
+      {{ form.as_p }}
+      <input type="submit" value="회원가입">
+    </div>
+  </form>
+{% endblock content %}

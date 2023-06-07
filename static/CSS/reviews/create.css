@@ -1,0 +1,26 @@
+.main__container {
+  padding: 30px 50px;
+}
+
+.submit-button {
+  padding: 10px;
+  margin: 30px auto;
+}
+
+.submit-button:hover {
+  background-color: var(--color-green);
+}
+
+.form-group {
+  margin-top: 10px;
+}
+
+label {
+  margin: 10px 5px;
+  font-size: var(--font-regular);
+}
+
+.help-text {
+  margin: 5px;
+  color: var(--color-gray-4);
+}

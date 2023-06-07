@@ -1,0 +1,104 @@
+/* 카드 */
+.cards__container {
+  position: relative;
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 150px;
+  height: 160px;
+  background-color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-soft);
+  border: none;
+  box-shadow: 5px 5px 10px lightgray;
+  margin: 1px;
+
+  padding: 10px 10px;
+}
+
+.card:hover {
+  border: 3px solid var(--color-lightgreen);
+  transform: scale(1.03);
+}
+
+.card__title {
+  font-size: var(--font-small);
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-gray-7);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
+  height: 20px;
+}
+
+.card__content {
+  font-size: var(--font-micro);
+  color: var(--color-gray-7);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 28px;
+  margin: 10px 0;
+}
+
+.card__language-container {
+  display: flex;
+  min-height: 30.6px;
+}
+
+.card__language,
+.card__badge,
+.card__day {
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  border: 1px solid var(--color-gray-2);
+  position: relative;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.card__day{
+  text-align: center;
+  line-height: 1.6em;
+  color: var(--color-gray-6);
+}
+
+.card__language img {
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card__footer {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__userinfo {
+  display: flex;
+  align-items: center;
+}
+
+.card__username,
+.card__headCount {
+  color: var(--color-gray-5);
+  font-size: var(--font-micro);
+}

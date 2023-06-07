@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+<h1>멤버 관리 페이지</h1>
+<hr>
+
+{% if study.join_condition == 1 %}
+  <!-- 승인이 필요한 스터디만 요청 정보 제공 -->
+  <div>
+    <p>참여요청</p>
+  {% if join_requests %}
+    {% for request in join_requests %}
+      <div>
+        <span>{{ request }} 님께서 스터디에 참여를 요청하셨습니다</span>
+        <form action="{% url 'studies:accept' study.pk request %}" method="post">
+          {% csrf_token %}
+          <button type="submit">승인</button>
+        </form>
+        <form action="{% url 'studies:reject' study.pk request %}" method="post">
+          {% csrf_token %}
+          <button type="submit">거절</button>
+        </form>
+      </div>
+      <br>
+    {% endfor %}
+  {% else %}
+    <p>참여 요청이 없습니다</p>
+  {% endif %}
+  </div>
+  <hr>
+{% endif %}
+
+
+<div>
+  <p>멤버 관리</p>
+  {% for member in study_members %}
+  <div>
+    <span>{{ member.user }}</span>
+    {% if member.permission == 3 %}
+      <span> - 조장</span>
+    {% else %}
+      <form action="{% url 'studies:expel' study.pk member.user %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="강퇴">
+      </form>
+    {% endif %}
+    
+    <br>
+  </div>
+  {% endfor %}
+</div>
+<hr>
+
+{% endblock content %}

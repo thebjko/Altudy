@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+<!-- 기본 회원가입 템플릿 -->
+
+{% load socialaccount %}
+{% load static %}
+
+{% block style %}
+  <link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/accounts/signup.css' %}"
+  />
+{% endblock style %}
+
+
+{% block content %}
+    <div class="main__signup-container">
+      <div class="main__logobox">
+        <img src="{% static 'IMAGE/altudy.png' %}" alt="알터디 로고" class="main__altudylogo">
+      </div>
+      <form action="{% url 'accounts:signup' %}" method="POST" class="main__signupbox">
+        {% csrf_token %}
+        <div>
+          {{ form.as_p }}
+          <input type="submit" value="altudy 회원가입" class="main__signupbutton">
+          <div class="main__socialbox">
+            <a href="{% provider_login_url 'github'%}"><img src="{% static 'IMAGE/github.png' %}" alt="깃허브 로고" class="main__sociallogo"></a>
+            <a href="{% provider_login_url 'google'%}"><img src="{% static 'IMAGE/google.png' %}" alt="구글 로고" class="main__sociallogo"></a>
+          </div>
+        </div>
+      </form>
+    </div>
+{% endblock content %}

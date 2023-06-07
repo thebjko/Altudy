@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from . import views
 
 
 urlpatterns = [
@@ -24,6 +25,9 @@ urlpatterns = [
     path('reviews/', include('reviews.urls')),
     path('studies/', include('studies.urls')),
     path('accounts/', include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('', views.main, name='main'),
+    # path('alarm/', views.alarm, name='alarm'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

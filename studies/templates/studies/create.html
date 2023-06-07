@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+<h1 class="">스터디 생성</h1>
+
+<form action="{% url 'studies:create' %}" method="post" class="">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="">스터디 생성</button>
+</form>
+
+<a href="{% url 'studies:index' %}">[Home]</a>
+{% endblock content %}

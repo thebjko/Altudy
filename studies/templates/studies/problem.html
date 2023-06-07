@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+
+{% endblock style %} {% block content %}
+<h1>학습 관리</h1>
+<hr>
+
+<div>
+  <p>문제 검색</p>
+  <input type="text" data-study-id="{{ study.pk }}" id="prob-search-input">
+  <div>
+    <span>제출하지 않은 과제</span>
+    <button id="is-solved-btn">off</button>
+  </div>
+</div>
+<hr>
+
+<div>
+  <h3>문제</h3>
+  <a href="{% url 'reviews:create' %}?study={{ study.pk }}">문제 생성하기</a>
+  <hr>
+  <div id="prob-search-list">
+    <!-- studies/search.js에서 요소 추가, js 내 주석 참고 -->
+    <!-- ul > li > a 구조 -->
+  </div>
+</div>
+<hr>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'studies/search.js' %}"></script>
+{% endblock content %}

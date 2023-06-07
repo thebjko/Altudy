@@ -1,0 +1,226 @@
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/studies/detail.css' %}"
+/>
+{% endblock style %}
+{% block content %}
+{# studies 앱에서 reviews 앱으로 넘어갈때 "localhost:8000/reviews/?study=n"로 넘기기 #} 
+{# 예비 코드 #} 
+{% comment %} 
+<a href="{% url 'reviews:index' %}?study={{ study.pk }}">test</a> 
+{% endcomment %}
+
+{% if request.user in study.studying_users.all %}
+<a href="{% url 'studies:mainboard' study.pk %}">
+  <p style="margin: 1rem 0; color: blue;">메인보드로 이동</p>
+</a>
+{% endif %}
+
+<main class="study__wrapper">
+  {# 스터디 디테일 내용 #}
+  <article>
+    <div class="study__container">
+      <div class="study__title">{{ study.title }}</div>
+      <div class="study__userInfo">
+        <div class="study__userInfo-badge">
+          <p>&#128035;</p>
+        </div>
+        <div class="study__userInfo-username">{{ study.user }}</div>
+      </div>
+      <div class="study__crudInfo">
+        {{ study.created_at }}
+        {# 스터디 수정/삭제 #}
+        {% if request.user == study.user %}
+        <a
+          class="study__crudInfo-item"
+          href="{% url 'studies:update' study.pk %}"
+          >수정</a
+        >
+        <button
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteStudy"
+          class="study__crudInfo-item"
+        >
+          삭제
+        </button>
+
+        {# 삭제 모달 #}
+        <div
+          class="modal fade"
+          id="deleteStudy"
+          tabindex="-1"
+          aria-labelledby="deleteStudyLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content pt-3 px-3">
+              <button
+                type="button"
+                class="btn-close ms-auto"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+              <div class="modal-body text-center">정말 삭제하시겠습니까?</div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  닫기
+                </button>
+                {# 삭제 버튼 #}
+                <form
+                  action="{% url 'studies:delete' study.pk %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-delete">삭제</button>
+                </form>
+                {# 삭제 버튼 end #}
+              </div>
+            </div>
+          </div>
+        </div>
+        {# 삭제 모달 end #}
+        {% endif %}
+        {# 스터디 수정/삭제 end #}
+      </div>
+      <hr />
+
+      <div class="study__info">
+        <div class="study__info-item">
+          <div class="study__info-item-left">
+            <div class="study__info-item-title">모집 인원</div>
+            <div class="separator"></div>
+          </div>
+          <div class="study__info-item-right">
+            {{study.studying_users.count}}/{{ study.capacity }}
+          </div>
+        </div>
+        <div class="study__info-item">
+          <div class="study__info-item-left">
+            <div class="study__info-item-title">스터디 일정</div>
+            <div class="separator"></div>
+          </div>
+          <div class="study__info-item-right study__info-margin-top">
+            {# 요일 #}
+            {% if study.days %}
+            {% for day in study.days %} 
+            <div class="study__info-circle">{{ day }}</div>
+            {% endfor %}
+            {% else %}
+            <div class="cancel-margintop">
+              미정
+            </div>
+            {% endif %}
+            
+            {# 시간 #}
+            <div class="study-time__container">
+              {% if study.start_time %}
+                {% if study.end_time %}
+                  {{ study.start_time }} ~ {{ study.end_time }}
+                {% else %}
+                  {{ study.start_time }} ~ 미정
+              {% endif %}
+              {% else %}
+                {% if study.end_time %}
+                  미정 ~ {{ study.end_time }}
+                  {% else %}
+                    {% if study.days%}
+                    시간 미정
+                    {% else %}
+                    {% endif %}
+                {% endif %}
+              {% endif %}
+          </div>
+          </div>
+        </div>
+        <div class="study__info-item">
+          <div class="study__info-item-left">
+            <div class="study__info-item-title">스터디 기간</div>
+            <div class="separator"></div>
+          </div>
+          <div class="study__info-item-right">
+            {% if study.start_date %}
+              {% if study.end_date %}
+                {{ study.start_date }} ~ {{ study.end_date }}
+              {% else %}
+                {{ study.start_date }} ~ 미정
+              {% endif %}
+            {% else %}
+              {% if study.end_date %}
+                미정 ~ {{ study.end_date }}
+              {% else %}
+                미정
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="study__info-item">
+          <div class="study__info-item-left">
+            <div class="study__info-item-title">알고리즘 언어</div>
+            <div class="separator"></div>
+          </div>
+          <div class="study__info-item-right study__info-margin-top"> 
+            {% if study.language %}
+              {% for language in study.language %}
+              {% for lang_code, lang_name in LANGUAGE_CHOICES %}
+              {% if lang_code == language %}
+                <div class="study__info-circle custom-circle">
+                  <div class="lauguage__container">
+                    <img src="{% static 'IMAGE/hashlogo/'|add:lang_code|add:'.png' %}" alt="{{ lang_name }} 언어 로고">
+                    <div>{{ lang_name }}</div>
+                  </div>
+                </div>
+              {% endif %}
+              {% endfor %}
+              {% endfor %}
+            {% else %}
+              <div class="cancel-margintop">
+                미정
+              </div>
+            {% endif %}
+            </div>
+        </div>
+      </div>
+      <div class="study__content">
+        {{ study.description|linebreaksbr }}
+        <div class="study__content-joinContainer">
+          {% if is_studying == 'joined' %}
+          <form action="{% url 'studies:withdraw' study.pk %}" method="post">
+            {% csrf_token %}
+            <button type"submit" class="button-large">스터디 탈퇴</button>
+            {# TODO: 스터디장은 스터디 탈퇴가 불가해야함, 어떤 식으로 보일지 의논 필요 #}
+          </form>
+          {% elif is_studying == 'join_request' %}
+          <form action="{% url 'studies:cancel' study.pk %}" method="post">
+            {% csrf_token %}
+            <button class="button-large" disabled>참여 요청 중</button>
+            <button type="submit" class="button-large">참여 취소</button>
+          </form>
+          {% else %}
+          <form action="{% url 'studies:join' study.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="button-large">스터디 참여</button>
+          </form>
+          {# 스터디 참여 요청 기능 완성 후 변환 필요 #}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="category__container">
+      {% for category in study.category.all|dictsort:'name' %}
+      <span class="category-item">#{{ category }}</span>
+      {% endfor %}
+    </div>
+  </article>
+  <hr />
+  {# 댓글 #}
+  <article></article>
+</main>
+
+{% endblock content %}

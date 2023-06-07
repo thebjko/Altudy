@@ -1,0 +1,141 @@
+.main__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 문제 */
+.probelm-box {
+  width: 600px;
+  height: auto;
+  padding: 10px;
+  margin-top: 30px;
+}
+
+hgroup {
+  padding: 10px;
+  border-bottom: 1px solid var(--color-gray-3);
+}
+
+.probelm-content-box {
+  padding: 10px;
+}
+
+.problem-title {
+  margin-bottom: 10px;
+  font-size: var(--font-medium);
+  font-weight: var(--weight-bold);
+}
+
+.problem-description {
+  padding: 10px;
+}
+
+.problem-button-box {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  height: auto;
+  margin-top: 15px;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* 리뷰 */
+.review-box {
+  width: 600px;
+  height: auto;
+  padding: 10px;
+  margin-top: 30px;
+}
+
+.review {
+  width: 600px;
+  border-top: 1px solid var(--color-gray-3);
+  padding: 10px 0;
+}
+
+.review-content {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 20px 20px 10px;
+  background-color: var(--color-gray-2);
+  border-radius: var(--border-radius-soft);
+  font-size: var(--font-regular);
+}
+
+.review-button-box {
+  display: flex;
+  justify-content: flex-end;
+  width: 500px;
+  height: auto;
+  margin-left: auto;
+  padding: 10px 0;
+}
+
+/* 버튼 스타일 초기화 */
+.reset-style {
+  border: none;
+  background: none;
+  font: inherit;
+  outline: inherit;
+}
+
+.reset-style input[type="submit"] {
+  border: none;
+  background: none;
+  font: inherit;
+  outline: inherit;
+}
+
+.joinbutton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 0 5px;
+  height: 30px;
+  border: 1px solid var(--color-green);
+  background-color: var(--color-green);
+  color: var(--color-white);
+  font-size: var(--font-small);
+  line-height: 30px;
+}
+
+.joinbutton:hover {
+  border: 1px solid var(--color-green);
+  background-color: var(--color-white);
+  color: var(--color-green);
+}
+
+#like-forms input[type="submit"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  height: 30px;
+  margin: 0 10px;
+  border: 1px solid var(--color-green);
+  border-radius: var(--border-radius-soft);
+  background-color: var(--color-green);
+  color: var(--color-white);
+  line-height: 30px;
+}
+
+#like-forms input[type="submit"]:hover {
+  border: 1px solid var(--color-green);
+  background-color: var(--color-white);
+  color: var(--color-green);
+}
+
+.gray-button {
+  border: none;
+  background-color: var(--color-gray-6);
+}

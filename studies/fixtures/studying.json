@@ -1,0 +1,42 @@
+[
+{
+    "model": "studies.studying",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "study": 1,
+        "permission": 3,
+        "joined_at": "2023-06-01T04:37:23.041Z"
+    }
+},
+{
+    "model": "studies.studying",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "study": 2,
+        "permission": 3,
+        "joined_at": "2023-06-01T06:29:58.094Z"
+    }
+},
+{
+    "model": "studies.studying",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "study": 3,
+        "permission": 3,
+        "joined_at": "2023-06-01T06:30:32.560Z"
+    }
+},
+{
+    "model": "studies.studying",
+    "pk": 4,
+    "fields": {
+        "user": 3,
+        "study": 1,
+        "permission": 1,
+        "joined_at": "2023-06-01T06:30:51.485Z"
+    }
+}
+]

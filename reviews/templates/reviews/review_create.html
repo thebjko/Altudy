@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/reviews/create.css' %}"
+/>
+{% endblock style %}
+{% block content %}
+<div class="main__container">
+<form id="form" action="{% url 'reviews:review_create' problem_pk %}" method="post">
+  {% csrf_token %}
+  
+  {% with form.content as content %}
+  <div class="form-group" style="display: none;">
+    {# UI에 드러나지 않는 div입니다 #}
+    <label for="{{ content.id_for_label }}">{{ content.label }}</label>
+    <textarea id="{{ content.id_for_label }}" class="form-control" placeholder="{{ content.label }}" name="{{ content.name }}"></textarea>
+  </div>
+  {% endwith %}
+  
+  {# ToastUI가 들어가는 div입니다 #}
+  <div id="editor"></div>
+
+  {% with form.tags as tags %}
+  <div class="form-group">
+    <label for="{{ tags.id_for_label }}">{{ tags.label }}</label>
+    <input type="{{ tags.field.widget.input_type }}" class="form-control" id="" placeholder="{{ tags.label }}" name="{{ tags.name }}" />
+  </div>
+  {% endwith %}
+  
+  <button class="submit-button button-small" type="submit">리뷰 작성하기</button>
+</form>
+</div>
+<script src="{% static 'reviews/toastui.js' %}"></script>
+{% endblock content %}

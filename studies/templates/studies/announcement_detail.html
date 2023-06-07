@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+<h1 class="">스터디 공지 - [{{ announcement.pk }}]</h1>
+
+<hr>
+
+<p>제목 - {{ announcement.title }}</p>
+<p>내용 - {{ announcement.content }}</p>
+<p>생성날짜 - {{ announcement.created_at }}</p>
+<p>수정날짜 - {{ announcement.updated_at }}</p>
+
+{% if request.user == leader %}
+<div style="margin: 3rem 0;">
+  <a href="{% url 'studies:announcement_update' study_pk announcement.pk %}">
+    공지 수정
+  </a>
+  <form action="{% url 'studies:announcement_delete' study_pk announcement.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit">공지 삭제</button>
+  </form>
+</div>
+{% endif %}
+
+<a href="{% url 'studies:announcement' study_pk %}">스터디 공지로 돌아가기</a>
+
+{% endblock content %}

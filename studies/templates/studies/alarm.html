@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+<h1 class="">임시 알람 페이지</h1>
+
+<hr>
+
+<h2>스터디 가입 요청</h2>
+{% for study_requests in all_requests %}
+{% with study_requests|first as study %}
+  {% for request in study_requests|last %}
+    <div>
+      <div>{{ study.title }} - {{ request }}</div>
+      <form action="{% url 'studies:accept' study.pk request %}" method="post">
+        {% csrf_token %}
+        <button type="submit">승인</button>
+      </form>
+      <form action="{% url 'studies:reject' study.pk request %}" method="post">
+        {% csrf_token %}
+        <button type="submit">거절</button>
+      </form>
+    </div>
+  {% endfor %}
+{% endwith %}
+{% endfor %}
+
+<hr>
+
+<h1>공지</h1>
+
+{% for study_announcements in all_announcements %}
+  {% for announcement in study_announcements %}
+    <a href="{% url 'studies:announcement_detail' announcement.study.pk announcement.pk %}">
+      <div>✉️ {{ announcement.title }}</div>
+    </a>
+  {% endfor %}
+{% endfor %}
+
+{% endblock content %}

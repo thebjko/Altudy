@@ -1,0 +1,62 @@
+[
+{
+    "model": "studies.study",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "title": "스터디1",
+        "description": "",
+        "language": "",
+        "capacity": 5,
+        "start_date": null,
+        "end_date": null,
+        "days": "",
+        "start_time": null,
+        "end_time": null,
+        "created_at": "2023-06-01T04:37:22.950Z",
+        "join_condition": 1,
+        "post_index": 1,
+        "join_request": []
+    }
+},
+{
+    "model": "studies.study",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "title": "스터디2",
+        "description": "스터디장: [pk=2] user",
+        "language": "",
+        "capacity": 5,
+        "start_date": null,
+        "end_date": null,
+        "days": "",
+        "start_time": null,
+        "end_time": null,
+        "created_at": "2023-06-01T06:29:58.061Z",
+        "join_condition": 1,
+        "post_index": 1,
+        "join_request": []
+    }
+},
+{
+    "model": "studies.study",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "title": "스터디33",
+        "description": "스터디장 - [pk=3] user2",
+        "language": "",
+        "capacity": 5,
+        "start_date": null,
+        "end_date": null,
+        "days": "",
+        "start_time": null,
+        "end_time": null,
+        "created_at": "2023-06-01T06:30:32.535Z",
+        "join_condition": 1,
+        "post_index": 1,
+        "join_request": []
+    }
+}
+]

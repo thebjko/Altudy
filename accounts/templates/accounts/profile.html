@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+  <link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/accounts/profile.css' %}"
+  />
+{% endblock style %}
+{% block content %}
+<div class="main__container">
+  <div class="main__logobox">
+    <img src="{% static 'IMAGE/altudy.png' %}" alt="알터디 로고" class="main__altudylogo">
+  </div>
+  <h1 class="main__title"><span>{{ request.user }} </span>님의 프로필</h1>
+  <div class="main__content"><span>아이디 </span>{{ person.username }}</div>
+  <div class="main__content"><span>이메일 </span>{{ person.email }}</div>
+  <div class="button-box">
+    <a href="{% url 'accounts:update' %}"><div class="update-button">회원정보수정</div></a>
+    <form action="{% url 'accounts:delete' %}" method="POST" class="delete-button">
+      {% csrf_token %}
+      <input type="submit" value="회원탈퇴">
+    </form>
+  </div>
+</div>
+{% endblock content %}

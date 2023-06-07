@@ -1,0 +1,62 @@
+:root {
+  /* color */
+  --color-black: #1d1d1f;
+  --color-white: #FFFFFF;
+  --color-green: #6C8E2D;
+  --color-lightgreen: #BBD885;
+  --color-gray-1: #f5f7f9;
+  /* --color-gray-1: #eaeef2; */
+  --color-gray-2: #d0d7de;
+  --color-gray-3: #afb8c1;
+  --color-gray-4: #8c959f;
+  --color-gray-5: #6e7781;
+  --color-gray-6: #57606a;
+  --color-gray-7: #24292F;
+
+  /* font-family */
+  --font-family: 'Nanum Gothic', sans-serif;
+  --font-family: 'Noto Sans KR', sans-serif;
+
+  /* font-size */
+  --font-xlarge: 3rem;     
+  --font-large: 2.5rem;
+  --font-medium: 1.5rem; 
+  --font-regular: 1.125rem; 
+  --font-small: 1rem;    
+  --font-micro: 0.875rem;
+  
+  /* Font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+
+  /* Size */
+  --border-radius-soft: 8px;
+  --border-radius-hard: 10px;
+
+  /* Animation */
+  --animation-duration: 300ms;
+}
+
+/* 태그버튼 */
+.button-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-gray-6);
+  color: var(--color-white);
+  /* width: 5em; */
+  /* height: 3em; */
+  border: none;
+  border-radius: var(--border-radius-soft);
+}
+
+/* 이동버튼 */
+.button-large {
+  background-color: var(--color-gray-6);
+  color: var(--color-white);
+  width: 10em;
+  height: 4em;
+  border: none;
+  border-radius: var(--border-radius-soft);
+}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/reviews/create.css' %}"
+/>
+{% endblock style %}
+{% block content %}
+<div class="main__container">
+  <form id="form" action="{% url 'reviews:create' %}" method="post">
+    {% comment %} <input type="hidden" name="study" value="{{ study_id }}"> {% endcomment %}
+    {% csrf_token %}
+    
+    {% with form.title as title %}
+    <div class="form-group">
+      <label for="{{ title.id_for_label }}">{{ title.label }}</label>
+      <input type="{{ title.field.widget.input_type }}" class="form-control" id="" placeholder="{{ title.label }}" name="{{ title.name }}" />
+    </div>
+    {% endwith %}
+
+    {% with form.url as url %}
+    <div class="form-group">
+      <label for="{{ url.id_for_label }}">{{ url.label }}</label>
+      <input type="{{ url.field.widget.input_type }}" class="form-control" id="" placeholder="{{ url.label }}" name="{{ url.name }}" />
+    </div>
+    {% endwith %}
+
+    {% with form.description as description %}
+    <div class="form-group" style="display: none;">
+      {# UI에 드러나지 않는 div입니다 #}
+      <label for="{{ description.id_for_label }}">{{ description.label }}</label>
+      <textarea id="{{ description.id_for_label }}" class="form-control" placeholder="{{ description.label }}" name="{{ description.name }}"></textarea>
+    </div>
+    {% endwith %}
+    
+    {# ToastUI가 들어가는 div입니다 #}
+    <div id="editor"></div>
+
+    {% with form.tags as tags %}
+    <div class="form-group">
+      <label for="{{ tags.id_for_label }}">{{ tags.label }}</label>
+      <input type="{{ tags.field.widget.input_type }}" class="form-control" id="{{ tags.id_for_label }}" placeholder="{{ tags.label }}" name="{{ tags.name }}" />
+    </div>
+    <p class="help-text">{{ tags.help_text }}</p>
+    {% endwith %}
+    <button class="submit-button button-small" type="submit">문제 작성하기</button>
+  </form>
+</div>
+<script src="{% static 'reviews/toastui.js' %}"></script>
+{% endblock content %}

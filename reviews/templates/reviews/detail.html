@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/reviews/detail.css' %}"
+/>
+{% endblock style %}
+{% block content %}
+<div class="main__container">
+  <div class="probelm-box">
+    <hgroup>
+      <h1 class="problem-title">{{ problem.title }}</h1>
+      <h4 class="problem-user"><span>&#128035;</span> {{ problem.user }}</h4>
+    </hgroup>
+    <div class="probelm-content-box">
+      <a href="{{ problem.url }}" class="problem-url">{{ problem.url }}</a>
+      <p class="problem-description">{{ problem.description|markdown }}</p>
+    </div>
+    <div class="problem-button-box">
+      {% if user == problem.user %}
+      <div style="display: flex;">
+        <form action="{% url 'reviews:update' problem.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="gray-button button-small joinbutton reset-style">문제 수정</button>
+        </form>
+        <form action="{% url 'reviews:delete' problem.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="gray-button button-small joinbutton reset-style">문제 삭제</button>
+        </form>        
+      </div>
+      {% endif %}
+      {% include 'reviews/components/like.html' with obj=problem %}
+    </div>
+    <div class="submit-button">
+      <a href="{% url 'reviews:review_create' problem.pk %}" class="button-small joinbutton reset-style">리뷰 작성하기</a>
+    </div>
+  </div>
+
+  <ul class="review">
+    {% for review in problem.review_set.all %}
+    <div class="review-content">
+      <li>{{ review.content|markdown }}</li>
+      <div class="review-button-box">
+        {% if user == review.user %}
+        <form action="{% url 'reviews:review_update' review.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="button-small joinbutton reset-style">리뷰 수정</button>
+        </form>          
+        {% endif %}
+        {% include 'reviews/components/like.html' with obj=review %}
+        <a href="{% url 'reviews:comment_create' review.pk %}" class="button-small joinbutton">댓글 작성</a>
+        <ul>
+          {% for comment in review.comment_set.all %}
+          <li>{{ comment.content|markdown }}</li>
+          <form action="{% url 'reviews:comment_update' comment.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">댓글 수정</button>
+          </form>
+          <form action="{% url 'reviews:comment_delete' comment.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">댓글 삭제</button>
+          </form>
+          {% include 'reviews/components/like.html' with obj=comment %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+  </ul>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'reviews/like.js' %}"></script>
+{% endblock content %}

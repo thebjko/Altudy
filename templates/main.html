@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="{% static 'CSS/main.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'CSS/card.css' %}" />
+{% endblock style %}
+{% block content %}
+<header>
+  <div class="banner__container">
+    <swiper-container class="bannerSwiper" autoplay="true">
+      <swiper-slide>
+        <img src="{% static 'IMAGE/1.png' %} " alt="배너1" class="banner1">
+      </swiper-slide>
+      <swiper-slide>
+        <img src="{% static 'IMAGE/2.png' %} " alt="배너2" class="banner2">
+      </swiper-slide>
+      <swiper-slide>
+        <img src="{% static 'IMAGE/3.png' %} " alt="배너2" class="banner3">
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</header>
+<main id="main__main">
+  <a href="{% url 'studies:create' %}">
+    <svg class="study-create-button" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+    </svg>
+  </a>
+  {# 나의 스터디 #}
+  {% if studyings  %}
+    <section class="myStudies__container">
+      <div class="studies__title">참여한 스터디 🙆🏻</div>
+      <div class="newStudies__wrapper">
+        {% for myStudy in studyings %}
+        <div class="newStudies__container">
+          {% if myStudy.announcements_count %}
+            <div class="alarm blinking">
+              {{ myStudy.announcements_count }}
+            </div>
+          {% endif %}
+          <div class="newStudies-title card__title">{{ myStudy.study.title }}</div>
+          <div class="card__days-container">
+            {% for day in myStudy.study.days %} 
+            <div class="card__day">{{ day }}</div>
+            {% endfor %}
+          </div>
+          <div class="card__language-container">
+            {% for language  in myStudy.study.language %}
+            <div class="card__language">
+              <img src="{% static 'IMAGE/hashlogo/'|add:language|add:'.png' %}" alt="{{ language }} 언어 로고">
+            </div>
+            {% endfor %}
+          </div>
+          <div class="newStudies-joinbutton__container">
+            <a href="{% url 'studies:mainboard' myStudy.study.pk %}">
+              <button class="button-small joinbutton">입장 하기</button>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>   
+    </section>
+  {% endif %}
+
+  {# 최신 스터디 #}
+  <section>
+    <div class="studies__title">최신 스터디 👩‍🏫</div>
+
+    <div class="cards__container">
+      <div class="swiper-button__container">
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+      <swiper-container class="mySwiper" init="false">
+        {% for study in latest_studies %}
+          <swiper-slide>
+            <div class="card">
+              <a href="{% url 'studies:detail' study.pk %}">
+                <div>
+                  <div class="card__title">{{ study.title }}</div>
+                  <div class="card__content">{{ study.description|linebreaksbr }}</div>
+                  <div class="card__language-container">
+                    {% for language  in study.language %}
+                    <div class="card__language">
+                      <img src="{% static 'IMAGE/hashlogo/'|add:language|add:'.png' %}" alt="{{ language }} 언어 로고">
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="card__footer">
+                  <div class="card__userinfo">
+                    <div class="card__badge"></div>
+                    <div class="card__username">{{ study.user }}</div>
+                  </div>
+                  <div class="card__headCount">{{ study.member_num }}/{{ study.capacity }}</div>
+                </div>
+              </a>
+            </div>
+          </swiper-slide>
+        {% endfor %}
+      </swiper-container>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
+
+<script type="text/javascript" src="{% static 'JS/swiper.js' %}"></script>
+{% endblock content %}

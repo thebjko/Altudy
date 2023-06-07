@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+<h1 class="">스터디 공지 생성</h1>
+
+<hr>
+
+<form action="{% url 'studies:announcement_create' study_pk %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">생성</button>
+</form>
+
+<a href="{% url 'studies:announcement' study_pk %}">스터디 공지로 돌아가기</a>
+
+{% endblock content %}

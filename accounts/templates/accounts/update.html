@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+  <link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/accounts/update.css' %}"
+  />
+{% endblock style %}
+{% block content %}
+<div class="main__container">
+  <div class="main__logobox">
+    <img src="{% static 'IMAGE/altudy.png' %}" alt="알터디 로고" class="main__altudylogo">
+  </div>
+  <h1 class="main__title">회원정보수정</h1>
+  <form action="{% url 'accounts:update' %}" method="POST">
+    {% csrf_token %}
+    <div>
+      {{ form.as_p }}
+      <input type="submit" value="회원정보수정" class="update-button">
+    </div>
+  </form>
+</div>
+{% endblock content %}
