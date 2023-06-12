@@ -1,0 +1,91 @@
+/* 공통 */
+section {
+  margin-bottom: 50px;
+}
+
+/* 가입 신청 요청 */
+.join-request__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.request-btns__containers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 30px;
+}
+
+.request-btns__containers button {
+  margin-right: 10px;
+  margin-top: 0;
+}
+
+.request-message {
+  font-size: var(--font-regular);
+  color: var(--color-gray-6);
+}
+
+.request-message span {
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-gray-7);
+}
+
+/* 멤버 관리 */
+
+.member__container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-left: 40px;
+}
+
+.member-capacity__container{
+  font-size: var(--font-regular);
+}
+.member-capacity__container span{
+  color: var(--color-lightgreen);
+}
+
+.member__container .member{
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-green);
+}
+.member__container .member-leader{
+  font-weight: var(--weight-semi-bold);
+  font-size: var(--font-micro);
+  margin-left: 3px;
+}
+
+.member__container input {
+  padding: 5px;
+  margin-top: 0;
+  margin-left: 8px;
+  
+  border: none;
+  background: transparent;
+  color: var(--color-gray-4);
+  font-size: var(--font-micro);
+  text-decoration: underline;
+}
+
+/* 스터디 가입 조건 관리 */
+#condition-form{
+  margin-left: 40px;
+  border-color: var(--color-gray-6) ;
+}
+
+#condition-select{
+  border-color: var(--color-gray-6) ;
+  border-radius: 10px;
+  width: 150px;
+  padding: 10px;
+}
+
+#condition-select option{
+  color: var(--color-gray-7);
+}

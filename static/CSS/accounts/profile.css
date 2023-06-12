@@ -1,100 +1,150 @@
-.main__container {
+.box {
+  border: 1px solid black;
+}
+
+.main__wrapper, .main__title {
+  width: 1024px;
+  padding: 0 32px;
+  margin: 50px auto 0;
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  max-width: 400px;
-  margin: 0 auto;
-  height: 100vh;
-  justify-content: center;
 }
 
-.main__logobox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 5px;
-  margin-bottom: 30px;
-  background-color: var(--color-gray-7);
-  border-radius: var(--border-radius-soft);
+.main__wrapper{
+  margin-top: 20px;
 }
 
-.main__altudylogo {
-  width: 60px;
-  height: auto;
+@media screen and (max-width: 1023px) {
+  .main__wrapper, .main__title {
+    width: 100%;
+    max-width: 1024px;
+  }
 }
 
-.main__title {
-  font-size: var(--font-medium);
+/* 유저 이름 */
+.main__title{
+  font-size: var(--font-large);
   font-weight: var(--weight-bold);
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
-.main__title span {
+
+/* 사이드 */
+.aside__container {
+  width: 20%;
+  min-width: 100px;
+  height: 500px;
+  background-color: var(--color-white);
+  box-shadow: 2px 2px 4px var(--color-gray-4);
+  border-radius: 10px;
+  padding: 30px;
+  position: relative;
+}
+
+.aside__item {
+  color: var(--color-gray-7);
+  font-weight: var(--weight-semi-bold);
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.active-item {
   color: var(--color-green);
 }
 
-.main__content {
-  margin-bottom: 15px;
-  padding: 20px;
-  border-bottom: 1px solid var(--color-gray-7);
-  font-size: var(--font-regular);
+/* 내용 */
+.right-content__container {
+  width: 80%;
+  background-color: var(--color-white);
+  box-shadow: 2px 2px 4px var(--color-gray-4);
+  border-radius: 10px;
+  margin-left: 10px;
+  padding: 30px;
 }
 
-.main__content span {
-  margin-right: 10px;
-  padding: 5px;
-  border: 1px solid var(--color-green);
-  border-radius: var(--border-radius-soft);
-  background-color: var(--color-green);
-  color: var(--color-gray-1);
+.right_content-item__wrapper {
+  margin-bottom: 80px;
+}
+
+/* 프로필 */
+.profile-title {
+  font-size: var(--font-medium);
+  font-weight: var(--weight-bold);
+  margin-bottom: 10px;
+}
+
+.profile-id, .profile-email, .profile-exp {
+  font-size: var(--font-regular);
 }
 
 .button-box {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
-.delete-button input[type="submit"] {
+/* 리뷰 css */
+.review-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.review-list li {
+  background-color: #f2f2f2;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.review-list li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.review-list li a:hover {
+  text-decoration: underline;
+}
+
+.review-ele {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 경험치 */
+.profile-exp {
+  width: 300px;
+}
+
+.progress {
+  height: 20px;
+}
+
+/* 공통 CSS */
+.create-btn {
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.create-btn:hover {
+  background-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.button-small {
+  background-color: var(--color-gray-1);
+  color: var(--color-gray-7);
+  font-size: var(--font-micro);
+  box-shadow: 2px 2px 4px var(--color-gray-2);
+}
+
+input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  box-sizing: border-box;
   border: none;
-  background: none;
-  font: inherit;
-  outline: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  background-color: var(--color-gray-1);
-  color: var(--color-gray-6);
-  border: 1px solid var(--color-gray-5);
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.delete-button input[type="submit"]:hover {
-  background-color: var(--color-gray-6);
-  color: var(--color-gray-1);
-}
-
-.update-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  background-color: var(--color-gray-1);
-  color: var(--color-gray-6);
-  border: 1px solid var(--color-gray-5);
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.update-button:hover {
-  background-color: var(--color-gray-6);
-  color: var(--color-gray-1);
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background-color: inherit;
 }

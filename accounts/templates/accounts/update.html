@@ -12,12 +12,23 @@
   <div class="main__logobox">
     <img src="{% static 'IMAGE/altudy.png' %}" alt="알터디 로고" class="main__altudylogo">
   </div>
-  <h1 class="main__title">회원정보수정</h1>
-  <form action="{% url 'accounts:update' %}" method="POST">
+  <form action="{% url 'accounts:update' %}" method="POST" class="main__updatebox">
     {% csrf_token %}
     <div>
-      {{ form.as_p }}
-      <input type="submit" value="회원정보수정" class="update-button">
+      <p>
+        <label for="id_username">이름</label>
+        {{ form.username }}
+      </p>
+      <p>
+        <label for="id_email">이메일</label>
+        {{ form.email }}
+      </p>
+      <div>
+        <input type="submit" value="회원정보수정" class="update-button">
+      </div>
+      <div class="password-button-border">
+        <a href="{% url 'accounts:change_password' %}" class="password-button">비밀번호 변경하기</a>
+      </div>
     </div>
   </form>
 </div>

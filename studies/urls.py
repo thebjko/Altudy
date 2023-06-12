@@ -38,4 +38,9 @@ urlpatterns = [
     # 부스터디장?
     path('<int:study_pk>/appoint/<username>/<int:permission>/', views.appoint, name='appoint'),
     path('<int:study_pk>/dismiss/<username>/', views.dismiss, name='dismiss'),
+    
+    # 스터디 댓글
+    path('<int:study_pk>/comment/create/', views.comment_create, name='comment_create'),
+    path('<int:study_pk>/comment/<int:comment_pk>/delete/', views.comment_delete, name='comment_delete'),
+    path('<int:study_pk>/comment/<int:comment_pk>/update/', views.comment_update, name='comment_update'),
 ]

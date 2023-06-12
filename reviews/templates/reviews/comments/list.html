@@ -1,0 +1,11 @@
+{% load custom_filters %}
+
+<!-- comment 목록입니다 -->
+<!-- reviews/templates/reviews/comments/list.html -->
+<ul id="comment-list-{{ review.pk }}" hx-swap="outerHTML">
+  {% for comment in review.comment_set.all %}
+  <div id="comment-item-{{ comment.pk }}-on-{{ review.pk }}" class="my-3">
+    {% include 'reviews/comments/item.html' %}
+  </div>
+  {% endfor %}
+</ul>

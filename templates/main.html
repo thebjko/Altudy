@@ -90,7 +90,7 @@
                 </div>
                 <div class="card__footer">
                   <div class="card__userinfo">
-                    <div class="card__badge"></div>
+                    <div class="card__badge">{{ study.user.emoji }}</div>
                     <div class="card__username">{{ study.user }}</div>
                   </div>
                   <div class="card__headCount">{{ study.member_num }}/{{ study.capacity }}</div>
@@ -100,6 +100,16 @@
           </swiper-slide>
         {% endfor %}
       </swiper-container>
+    </div>
+  </section>
+  {# 모든 스터디 #}
+  <section>
+    <div class="all-box">
+      <p>새로운 스터디에 도전하고 싶으신가요?</p>
+      <p><a href="{% url 'studies:index' %}" class="a"><b>버튼</b></a>을 클릭하면 더 많은 스터디를 찾아볼 수 있습니다.</p>
+      <a href="{% url 'studies:index' %}">
+        <button class="btn button-small">더 많은 스터디 보러가기 ></button>
+      </a>
     </div>
   </section>
 </main>

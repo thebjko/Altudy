@@ -1,18 +1,16 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
-from .forms import CustomUserCreationForm, CustomAuthenticationFormForm, CustomUserChangeForm, CustomPasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, Page
+from django.http import JsonResponse
+
+from .forms import CustomUserCreationForm, CustomAuthenticationFormForm, CustomUserChangeForm, CustomPasswordChangeForm
+from studies.models import Study, Studying
+from reviews.models import Review
 
 # Create your views here.
-
-
-# 테스트용 index입니다
-def index(request):
-    return render(request, 'accounts/index.html')
-
 
 def signup(request):
     if request.user.is_authenticated:
@@ -73,7 +71,6 @@ def login(request):
 @login_required
 def logout(request):
     auth_logout(request)
-    
     # 작업 성공 후 이전 페이지로 이동
     prev_url = request.META.get('HTTP_REFERER')
     if prev_url:
@@ -128,7 +125,23 @@ def change_password(request):
 def profile(request, username):
     user = get_user_model()
     person = user.objects.get(username=username)
+    host_studies = Study.objects.filter(user=person)
+    guest_studies = Studying.objects.filter(user=person).exclude(study__in=host_studies)
+
+    level = person.get_level()
+    next_level_exp = person.get_next_level_exp(level)
+
+    reviews = Review.objects.filter(user=person)
+    # paginator = Paginator(reviews, 5) 
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
+    # reviews = page_obj.object_list
+
     context = {
-        'person': person
+        'person': person,
+        'next_level_exp': next_level_exp,
+        'host_studies': host_studies,
+        'guest_studies': guest_studies,
+        'reviews': reviews,
     }
     return render(request, 'accounts/profile.html', context)

@@ -1,0 +1,14 @@
+<!-- 댓글 작성 form 입니다 -->
+<!-- reviews/templates/reviews/comments/create.html -->
+<div id="create-comment-on-{{ review.id }}" hx-target="#comment-list-{{ review.pk }}" hx-swap="innerHTML">
+  <form hx-post="{% url 'reviews:comment_create' review.pk %}">
+    {% with comment_form.content as content %}
+    <div class="form-group">
+      <textarea id="{{ content.id_for_label }}-{{ review.id }}" class="form-control my-3" placeholder="{{ content.label }}" name="{{ content.name }}"></textarea>
+    </div>
+    {% endwith %}
+    <div class="d-flex flex-row-reverse">
+      <button type="submit" class="button-small joinbutton">댓글 작성</button>
+    </div>
+  </form>
+</div>

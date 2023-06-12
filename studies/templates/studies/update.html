@@ -1,16 +1,72 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/studies/create.css' %}"
+/>
+{% endblock style %}
 {% block title %}{% endblock title %}
 
-
 {% block content %}
-<h1 class="">스터디 수정</h1>
+<div class="main__container">
+  <h1 class="main__container-title">알터디에서 새로운 스터디를 만들어보세요!</h1>
+  <div class="main__wrapper">
+    <form action="{% url 'studies:update' study_pk %}" method="post" class="">
+      {% csrf_token %}
+      <div class="content-box">
+        {{ form.title }}
+        {{ form.description }}
+        {% comment %} 참여신청 {% endcomment %}
+        <div class="join-box">
+          <div class="label">{{ form.join_condition.label }}</div>
+        {{ form.join_condition }}
+        </div>
+        {% comment %} 언어 {% endcomment %}
+        <div class="language-box">
+          <div class="label">{{ form.language.label }}</div>
+          {{ form.language }}
+        </div>
+        {% comment %} 카테고리 {% endcomment %}
+        <div class="category-box">
+          <div class="label">{{ form.category.label }}</div>
+          {{ form.category }}
+          <div class="help-text">{{ form.category.help_text }}</div>
+        </div>
+        {% comment %} 모집인원 {% endcomment %}
+        <div class="capacity-box">
+          <div class="label">{{ form.capacity.label }}</div>
+          {{ form.capacity }}
+          <div class="help-text">{{ form.capacity.help_text }}</div>
+        {% comment %} 시작일, 종료일 {% endcomment %}
+          <div class="flex">
+          <div class="margin-right">
+            <div class="label">{{ form.start_date.label }}</div>
+            {{ form.start_date }}
+          </div>
+          <div>
+            <div class="label">{{ form.end_date.label }}</div>
+            {{ form.end_date }}
+          </div>
+        </div>
+        {% comment %} 시작시간, 종료시간 {% endcomment %}
+        <div class="flex">
+          <div class="margin-right">
+            <div class="label">{{ form.start_time.label }}</div>
+            {{ form.start_time }}
+          </div>
+          <div>
+            <div class="label">{{ form.end_time.label }}</div>
+            {{ form.end_time }}
+          </div>
+        </div>
+      </div>
+      {% comment %} 버튼 {% endcomment %}
+      <div class="button-box">
+        <a href="{% url 'studies:index' %}" class="button-small">스터디 목록</a>
+        <button type="submit" class="button-small">스터디 정보 수정</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-<form action="{% url 'studies:update' study_pk %}" method="post" class="">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="">스터디 수정</button>
-</form>
-
-<a href="{% url 'studies:index' %}">[Home]</a>
 {% endblock content %}

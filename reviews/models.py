@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.db import models, transaction
 # from django.urls import reverse_lazy
 from taggit.managers import TaggableManager
@@ -63,7 +62,7 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='작성자', on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comments')
     review = models.ForeignKey("reviews.Review", verbose_name='리뷰', on_delete=models.CASCADE)
-    tags = TaggableManager(blank=True, related_name='comment_set')
+    # tags = TaggableManager(blank=True, related_name='comment_set')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

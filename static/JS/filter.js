@@ -11,9 +11,9 @@ languageButtons.forEach((button) => {
     const selectedLangs = languageContainer.querySelectorAll('.selected-btn')
     const langs = Array.from(selectedLangs).map((v) => v.dataset.lang).join(',')
     const recruits = toggleCheckbox.checked
-
+    const query = searchParam('query')
     try {
-      const response = await fetch(`/studies/?lang=${langs}&recruits=${recruits}`);
+      const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}`);
       console.log(response);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -35,9 +35,9 @@ selectedLanguagesContainer.addEventListener('click', async (e) => {
   const langs = Array.from(selectedLangs).map((v) => v.dataset.lang).join(',')
   const recruits = toggleCheckbox.checked
   console.log(langs)
-
+  const query = searchParam('query')
   try {
-    const response = await fetch(`/studies/?lang=${langs}&recruits=${recruits}`);
+    const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}`);
     console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -57,9 +57,9 @@ toggleCheckbox.addEventListener('change', async (e) => {
   const selectedLangs = languageContainer.querySelectorAll('.selected-btn')
   const langs = Array.from(selectedLangs).map((v) => v.dataset.lang).join(',');
   const recruits = toggleCheckbox.checked // 토글 on이면 true 반환
-
+  const query = searchParam('query')
   try {
-    const response = await fetch(`/studies/?lang=${langs}&recruits=${recruits}`);
+    const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}`);
     console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -74,3 +74,9 @@ toggleCheckbox.addEventListener('change', async (e) => {
     console.log(error);
   }
 });
+
+function searchParam(key) {
+  value = new URLSearchParams(location.search).get(key)
+  if(value == null) value = ''
+  return value
+}

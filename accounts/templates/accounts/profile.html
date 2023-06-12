@@ -6,21 +6,157 @@
   type="text/css"
   href="{% static 'CSS/accounts/profile.css' %}"
   />
+  <link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/card.css' %}"
+  />
+  <link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/main.css' %}"
+  />
 {% endblock style %}
 {% block content %}
-<div class="main__container">
-  <div class="main__logobox">
-    <img src="{% static 'IMAGE/altudy.png' %}" alt="알터디 로고" class="main__altudylogo">
-  </div>
-  <h1 class="main__title"><span>{{ request.user }} </span>님의 프로필</h1>
-  <div class="main__content"><span>아이디 </span>{{ person.username }}</div>
-  <div class="main__content"><span>이메일 </span>{{ person.email }}</div>
-  <div class="button-box">
-    <a href="{% url 'accounts:update' %}"><div class="update-button">회원정보수정</div></a>
-    <form action="{% url 'accounts:delete' %}" method="POST" class="delete-button">
-      {% csrf_token %}
-      <input type="submit" value="회원탈퇴">
-    </form>
-  </div>
+
+<div class="main__title">
+  <h1><span>{{ request.user.emoji_username }} </span>님의 프로필</h1>
 </div>
+<div class="main__wrapper">
+  <aside class="aside__container">
+    <div class="aside__item" data-section="profile">내 프로필</div>
+    <div class="aside__item" data-section="study">내 스터디</div>
+    <div class="aside__item" data-section="code">내 코드</div>
+  </aside>
+
+  <section class="right-content__container">
+    {% block right_content %}
+    {% endblock right_content %}
+    {#내 프로필#}
+    <section class="right_content-item__wrapper">
+      <div>
+        <h1 class="profile-title">🔗 회원정보</h1>
+        <div class="profile-id"><span>아이디 </span>{{ person.username }}</div>
+        <div class="profile-email"><span>이메일 </span>{{ person.email }}</div>
+        <div class=" profile-exp">
+          <p>내 레벨</p>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: {{ person.get_progress_percentage }}%"><p>EXP {{ person.get_progress_percentage }}% ({{ person.get_experience_from_level }} / {{ next_level_exp }})</p></div>
+          </div>
+          <p>LV. {{ person.get_level }}</p>
+
+        </div>
+
+        <div class="button-box">
+          <a href="{% url 'accounts:update' %}"><div class="create-btn button-small">회원정보수정</div></a>
+          <form action="{% url 'accounts:delete' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="회원탈퇴" class="create-btn button-small">
+          </form>
+        </div>
+      </div>      
+    </section>
+    {#내 스터디#}
+    <section class="right_content-item__wrapper">
+      <div>
+        <h1 class="profile-title">📤 내가 주최한 스터디</h1>
+        <div>
+          {% if host_studies  %}
+          <p>hi</p>
+          <section class="myStudies__container">
+            <div class="newStudies__wrapper">
+              {% for host_study in host_studies %}
+              <div class="newStudies__container">
+                {% if host_study.announcements_count %}
+                  <div class="alarm blinking">
+                    {{ host_study.announcements_count }}
+                  </div>
+                {% endif %}
+                <div class="newStudies-title card__title">{{ host_study.title }}</div>
+                <div class="card__days-container">
+                  {% for day in host_study.days %} 
+                  <div class="card__day">{{ day }}</div>
+                  {% endfor %}
+                </div>
+                <div class="card__language-container">
+                  {% for language  in host_study.language %}
+                  <div class="card__language">
+                    <img src="{% static 'IMAGE/hashlogo/'|add:language|add:'.png' %}" alt="{{ language }} 언어 로고">
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="newStudies-joinbutton__container">
+                  <a href="{% url 'studies:mainboard' host_study.pk %}">
+                    <button class="button-small joinbutton">입장 하기</button>
+                  </a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>   
+          </section>
+        {% endif %}
+        </div>
+      </div>
+      <div>
+        <h1 class="profile-title">📥 내가 가입한 스터디</h1>
+        <div>
+          {% if guest_studies %}
+          <section class="myStudies__container">
+            <div class="newStudies__wrapper">
+              {% for guest_study in guest_studies %}
+              <div class="newStudies__container">
+                {% if guest_study.announcements_count %}
+                  <div class="alarm blinking">
+                    {{ guest_study.announcements_count }}
+                  </div>
+                {% endif %}
+                <div class="newStudies-title card__title">{{ guest_study.study.title }}</div>
+                <div class="card__days-container">
+                  {% for day in guest_study.study.days %} 
+                  <div class="card__day">{{ day }}</div>
+                  {% endfor %}
+                </div>
+                <div class="card__language-container">
+                  {% for language  in guest_study.study.language %}
+                  <div class="card__language">
+                    <img src="{% static 'IMAGE/hashlogo/'|add:language|add:'.png' %}" alt="{{ language }} 언어 로고">
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="newStudies-joinbutton__container">
+                  <a href="{% url 'studies:mainboard' guest_study.study.pk %}">
+                    <button class="button-small joinbutton">입장 하기</button>
+                  </a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>   
+          </section>
+        {% endif %}
+        </div>
+      </div> 
+    </section>
+    {#내 코드 모음#}
+    <section class="right_content-item__wrapper">
+      <div>
+        <h1 class="profile-title profile-data" data-username="{{person.username}}">📝 에 제출한 내 코드</h1>
+      </div>
+
+      <!-- 리뷰 목록 -->
+      <ul class="review-list">
+        {% for review in reviews %}
+        <li class="review-ele">
+          <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
+          <span>{{ review.created_at }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <!-- 페이지네이션 컨테이너 -->
+      <div class="pagination-container"></div>
+      
+    </section>
+  </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'JS/profile.js' %}"></script>
 {% endblock content %}

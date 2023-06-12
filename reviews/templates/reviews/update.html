@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% load static %}
+{% block head %}
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css"
+  />
+{% endblock head %}
 {% block style %}
 <link
   rel="stylesheet"
@@ -10,20 +20,20 @@
 {% endblock style %}
 {% block content %}
 <div class="main__container">
-  <form id="form" action="{% url 'reviews:update' form.instance.pk %}" method="post">
+  <form id="form" hx-put="{% url 'reviews:update' form.instance.pk %}">
     {% csrf_token %}
     
     {% with form.title as title %}
     <div class="form-group">
       <label for="{{ title.id_for_label }}">{{ title.label }}</label>
-      <input type="{{ title.field.widget.input_type }}" class="form-control" id="" placeholder="{{ title.label }}" name="{{ title.name }}" value="{{ title.value }}"/>
+      <input type="{{ title.field.widget.input_type }}" class="form-control" id="" placeholder="{{ title.label }}" name="{{ title.name }}" value="{{ form.instance.title }}"/>
     </div>
     {% endwith %}
 
     {% with form.url as url %}
     <div class="form-group">
       <label for="{{ url.id_for_label }}">{{ url.label }}</label>
-      <input type="{{ url.field.widget.input_type }}" class="form-control" id="" placeholder="{{ url.label }}" name="{{ url.name }}" value="{{ url.value }}"/>
+      <input type="{{ url.field.widget.input_type }}" class="form-control" id="" placeholder="{{ url.label }}" name="{{ url.name }}" value="{{ form.instance.url }}"/>
     </div>
     {% endwith %}
 
@@ -41,10 +51,9 @@
     {% with form.tags as tags %}
     <div class="form-group">
       <label for="{{ tags.id_for_label }}">{{ tags.label }}</label>
-      <input type="{{ tags.field.widget.input_type }}" class="form-control" id="" placeholder="{{ tags.label }}" name="{{ tags.name }}"/>
+      <input type="{{ tags.field.widget.input_type }}" class="form-control" id="" placeholder="{{ tags.label }}" name="{{ tags.name }}" value="{% for tag in form.instance.tags.all %}{{ tag }} {% endfor %}"/>
     </div>
     {% endwith %}
-    
     <button class="submit-button button-small" type="submit">문제 수정하기</button>
   </form>
 </div>

@@ -117,13 +117,83 @@ input:focus {
 
 .dropdown-menu h2 {
   font-weight: var(--weight-semi-bold);
-  margin: 5px 0;
+  margin: 10px 0;
 }
 .dropdown-menu-title{
   font-size: var(--font-regular);
   font-weight: var(--weight-bold);
+  text-align: center;
 }
 
+.dropdown-menu__study {
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-green);
+  margin-bottom: 10px;
+}
+
+.join-message{
+  max-width: 140px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-height: 34px;
+
+  font-size: var(--font-micro);
+  line-height: 34px;
+}
+
+
+.button-box {
+  display: flex;
+  align-items: center;
+}
+
+.create-btn {
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.create-btn:hover {
+  background-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.button-small {
+  background-color: var(--color-gray-1);
+  color: var(--color-gray-7);
+  font-size: var(--font-micro);
+  box-shadow: 2px 2px 4px var(--color-gray-2);
+}
+
+.dropdown-menu__no-message {
+  color: var(--color-gray-5); 
+  margin-top: 1rem;
+}
+
+
+.dropdown-menu__container{
+  margin-top: 15px;
+  margin-left: 23px;
+}
+
+.announcement-title{
+  color: var(--color-gray-5);
+  font-size: var(--font-micro);
+  margin-bottom: 5px;
+
+}
+
+.content-box{
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.announcement-item {
+  margin-bottom: 20px;
+}
 /* footer */
 .footer__container {
   display: flex;
@@ -136,33 +206,17 @@ input:focus {
   color: var(--color-gray-6);
   font-size: var(--font-micro);
   box-shadow: 0px -9px 5px -9px var(--color-gray-2);
-  /* background-color: var(--color-gray-2); */
 }
 
-
-/* .teamInfo a {
-  color: var(--color-gray-5);
-} */
 
 /* 알림 옆 빨간원 표시 */
 .alarm-icon {
   width:10px; 
   height:10px; 
   background-color:red;
-  /* float: left;  */
   top: -5px; 
   left: 34px; 
   border-radius: 50%;
 
   position: absolute;
-}
-
-.dropdown-menu__no-message {
-  color:grey; 
-  margin-top: 1rem;
-}
-
-.dropdown-menu__study {
-  font-weight: bold;
-  color: var(--color-green);
 }

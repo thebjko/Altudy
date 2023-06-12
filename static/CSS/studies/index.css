@@ -124,3 +124,27 @@
 .card__content{
   white-space: normal;
 }
+
+/* 버튼 */
+.homebutton {
+  display: inline-block;
+  position: sticky;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  padding: 10px;
+  margin-top: 50px;
+  background-color: var(--color-green);
+  color: var(--color-white);
+  border: 1px solid var(--color-green);
+  text-align: center;
+  line-height: 10px;
+}
+
+.homebutton:hover {
+  border: 1px solid var(--color-green);
+  background-color: var(--color-white);
+  color: var(--color-green);
+  font-weight: var(--weight-semi-bold);
+}

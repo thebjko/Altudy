@@ -1,3 +1,7 @@
+article {
+  margin-bottom: 30px;
+}
+
 .box {
   border: 1px solid black;
 }
@@ -60,6 +64,12 @@
 .study__info-margin-top .cancel-margintop{
   transform: translate(0,+12px);
 }
+
+.cancel-margintop + .study-time__container {
+  transform: translate(0,+12px);
+  margin-top: 0;
+}
+
 .separator {
   width: 3px;
   height: 20px;
@@ -98,6 +108,7 @@
 }
 
 .study-time__container {
+  margin-top: -10px;
   margin-left : 10px;
 }
 
@@ -173,6 +184,50 @@
   justify-content: center;
 }
 
+/* 댓글작성 폼 */
+.comment-form {
+  resize: none;
+}
+
+.comment-create-form {
+  align-items: center;
+}
+
+/* 버튼 */
+.homebutton {
+  width: 90px;
+  padding: 10px;
+  margin: 20px 0;
+  background-color: var(--color-green);
+  color: var(--color-white);
+  border: 1px solid var(--color-green);
+  text-align: center;
+  line-height: 10px;
+}
+
+.homebutton:hover {
+  background-color: var(--color-white);
+  color: var(--color-green);
+  font-weight: var(--weight-semi-bold);
+  transform: scale(1.05);
+}
+
+.mainboardbutton {
+  width: 150px;
+  padding: 10px;
+  margin: 20px 0;
+  background-color: var(--color-gray-6);
+  color: var(--color-white);
+  border: 1px solid var(--color-gray-6);
+  text-align: center;
+  line-height: 10px;
+}
+
+.mainboardbutton:hover {
+  font-weight: var(--weight-semi-bold);
+  transform: scale(1.05);
+}
+
 .button-large {
   background-color: var(--color-green);
 }
@@ -181,7 +236,7 @@
   transform: scale(1.05);
 }
 
-.button-large:disabled {
+.button-large:disabled, .expel-btn {
   border: 1px solid var(--color-gray-6);
   background-color: var(--color-white);
   color: var(--color-gray-6);
@@ -189,13 +244,24 @@
   transform: scale(1);
 }
 
+.expel-btn:hover{
+  transform: scale(1);
+}
+
+.comment-btn {
+  height: 36px;
+  margin-bottom: 10px;
+}
+
 .category-item {
-  background-color: var(--color-gray-2);
-  font-size: var(--font-small);
+  background-color: var(--color-white);
+  font-size: var(--font-micro);
   color: var(--color-gray-6);
-  padding: 2px 5px;
+  font-weight: var(--weight-regular);
+
+  padding: 5px 8px;
   margin: 1px;
-  border-radius: 3px;
+  border-radius: 5px;
   box-shadow: 2px 2px 4px var(--color-gray-4);
 }
 

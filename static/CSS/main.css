@@ -73,6 +73,46 @@
   margin-bottom: 20px;
 }
 
+/* 모든 스터디 임의 스타일 */
+.all {
+  margin-top: 100px;
+}
+
+.studies__title {
+  font-size: var(--font-large);
+  font-weight: var(--weight-semi-bold);
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.all-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 100px 0;
+  color: var(--color-gray-4);
+  font-size: var(--font-regular);
+}
+
+.a {
+  color: var(--color-gray-6);
+  text-decoration: underline;
+}
+
+.btn {
+  padding: 10px;
+  margin: 30px;
+  font-size: var(--font-regular);
+  color: var(--color-white);
+  background-color: var(--color-green);
+}
+
+.btn:hover {
+  transform: scale(1.1);
+  color: var(--color-white);
+  background-color: var(--color-green);
+}
+
 /* 배너 */
 
 swiper-slide img {

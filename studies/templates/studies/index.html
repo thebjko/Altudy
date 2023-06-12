@@ -13,7 +13,11 @@
 {% block content %}
 <main id="studies_list__wrapper">
   <section>
+    {% if request.GET.query %}
+    <div class="title">"{{ request.GET.query }}" 검색</div>
+    {% else %}
     <div class="title">모든 스터디</div>
+    {% endif %}
     <div class="language__container">
       {% for lang_name, lang_label in LANGUAGE_CHOICES  %}
         <button class='language-btn' data-lang ='{{ lang_name }}'>{{ lang_label }}</button>
@@ -55,7 +59,7 @@
             </div>
             <div class="card__footer">
               <div class="card__userinfo">
-                <div class="card__badge"></div>
+                <div class="card__badge">{{ study.user.emoji }}</div>
                 <div class="card__username">{{ study.user }}</div>
               </div>
               <div class="card__headCount">{{ study.member_num }}/{{ study.capacity }}</div>
@@ -66,6 +70,7 @@
     </div>
     </article>
   </section>
+  <a href="{% url 'main' %}" class="homebutton button-small">HOME</a>
 </main>
 <script type="text/javascript" src="{% static 'JS/filter.js' %}"></script>
 <script type="module" src="{% static 'JS/clickBtn.js' %}"></script>

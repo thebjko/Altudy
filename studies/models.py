@@ -5,6 +5,9 @@ from taggit.managers import TaggableManager
 from multiselectfield import MultiSelectField
 from django.core.exceptions import ValidationError
 
+from django.utils import timezone
+from datetime import timedelta
+
 # Create your models here.
 LANGUAGE_CHOICES = [
     ('py', 'Python'),
@@ -77,6 +80,20 @@ class Study(models.Model):
     def __str__(self):
         return self.title
     
+    @property
+    def created_at_string(self):
+        time = timezone.now() - self.created_at
+        if time < timedelta(minutes=1):
+            return '방금 전'
+        elif time < timedelta(hours=1):
+            return str(time.seconds // 60) + '분 전'
+        elif time < timedelta(days=1):
+            return str(time.seconds // 3600) + '시간 전'
+        elif time < timedelta(days=30):
+            return str(time.days) + '일 전'
+        else:
+            return self.created_at.strftime('%Y-%m-%d')
+    
 
 # study - user M:N 중개 테이블
 class Studying(models.Model):
@@ -86,22 +103,30 @@ class Studying(models.Model):
     permission = models.PositiveSmallIntegerField(default=1)
     joined_at = models.DateTimeField(auto_now_add=True)
     
-    # def clean(self):
-    #     super().clean()
-    #     study = self.study
-    #     if Studying.objects.filter(study=study).count() < study.capacity_min:
-    #         raise ValidationError({'study': '스터디 최소 인원 수를 충족하지 않습니다.'})
-    
     
 class Announcement(models.Model):
     study = models.ForeignKey(to=Study, on_delete=models.CASCADE, related_name='announcements')
     
     title = models.CharField(max_length=20)
-    content = models.CharField(max_length=100)
+    content = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     announcement_reads = models.ManyToManyField(to=settings.AUTH_USER_MODEL, related_name='user_reads', through='AnnouncementRead')
+    
+    @property
+    def updated_at_string(self):
+        time = timezone.now() - self.updated_at
+        if time < timedelta(minutes=1):
+            return '방금 전'
+        elif time < timedelta(hours=1):
+            return str(time.seconds // 60) + '분 전'
+        elif time < timedelta(days=1):
+            return str(time.seconds // 3600) + '시간 전'
+        elif time < timedelta(days=30):
+            return str(time.days) + '일 전'
+        else:
+            return self.updated_at.strftime('%Y-%m-%d')
 
 
 class AnnouncementRead(models.Model):
@@ -118,3 +143,25 @@ class AnnouncementRead(models.Model):
     
 #     start_time = models.TimeField(blank=True, null=True)
 #     end_time = models.TimeField(blank=True, null=True)
+
+
+class StudyComment(models.Model):
+    study = models.ForeignKey(to=Study, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    
+    content = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    @property
+    def created_at_string(self):
+        time = timezone.now() - self.created_at
+        if time < timedelta(minutes=1):
+            return '방금 전'
+        elif time < timedelta(hours=1):
+            return str(time.seconds // 60) + '분 전'
+        elif time < timedelta(days=1):
+            return str(time.seconds // 3600) + '시간 전'
+        elif time < timedelta(days=30):
+            return str(time.days) + '일 전'
+        else:
+            return self.created_at.strftime('%Y-%m-%d')

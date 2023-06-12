@@ -1,5 +1,5 @@
 from django import forms
-from .models import Study, Announcement, Studying
+from .models import Study, Announcement, Studying, StudyComment
 from taggit.forms import TagWidget, TagField
 
 from reviews.fields import SpaceSeparatedTagsField
@@ -21,30 +21,59 @@ class StudyForm(forms.ModelForm):
             'join_condition',
             )
         labels = {
-            # 'title': '', 
-            # 'description': '',
-            # 'language': '',
-            # 'category': '',
-            # 'capacity': '스터디 최대 인원수',
-            # 'start_date': '스터디 시작일',
-            # 'end_date': '스터디 종료일',
-            # 'days': '스터디 진행 요일',
-            # 'start_time': '스터디 시작시간',
-            # 'end_time': '스터디 종료시간',
-            # 'join_condition': '가입 요청 여부',
+            'title': '스터디 이름', 
+            'description': '스터디 설명',
+            'language': '언어',
+            'category': '카테고리',
+            'capacity': '모집 인원',
+            'start_date': '스터디 시작일',
+            'end_date': '스터디 종료일',
+            'days': '진행 요일',
+            'start_time': '시작 시간',
+            'end_time': '종료 시간',
+            'join_condition': '가입 요청',
             }
         widgets = {
-            'title': forms.TextInput(attrs={}),
-            'description': forms.Textarea(attrs={}),
-            'language': forms.SelectMultiple(attrs={}),
-            'category': TagWidget(attrs={}),
-            'capacity': forms.NumberInput(attrs={}),
-            'start_date': forms.DateInput(attrs={'type':'date',}),
-            'end_date': forms.DateInput(attrs={'type':'date',}),
-            'days': forms.SelectMultiple(attrs={}),
-            'start_time': forms.TimeInput(attrs={'type':'time',}),
-            'end_time': forms.TimeInput(attrs={'type':'time',}),
-            'join_condition': forms.Select(attrs={}),
+            'title': forms.TextInput(attrs={
+                'class':'title',
+                'placeholder':'스터디 이름을 입력하세요',
+            }),
+            'description': forms.Textarea(attrs={
+                'class':'description',
+                'placeholder':'스터디 설명을 입력하세요\r\n \r\n- 스터디 목적/주제: [스터디 목적/주제]\r\n- 참여 조건 및 요구사항: [참여 조건/요구사항]\r\n- 스터디 활동 내용: [스터디 활동 내용]\r\n\r\n자세한 설명을 추가하시면, 더 멋진 스터디원을 구하는데 도움이 됩니다.',
+            }),
+            'language': forms.SelectMultiple(attrs={
+                'class':'language',
+            }),
+            'category': TagWidget(attrs={
+                'class':'category',
+                'placeholder':'ex) 비대면, 소규모, 코테준비 등',
+            }),
+            'capacity': forms.NumberInput(attrs={
+                'class':'capacity',
+            }),
+            'start_date': forms.DateInput(attrs={
+                'class':'start_date',
+                'type':'date',
+            }),
+            'end_date': forms.DateInput(attrs={
+                'class':'end_date',
+                'type':'date',
+            }),
+            'days': forms.SelectMultiple(attrs={
+                'class':'days',
+            }),
+            'start_time': forms.TimeInput(attrs={
+                'class':'start_time',
+                'type':'time',
+            }),
+            'end_time': forms.TimeInput(attrs={
+                'class':'end_time',
+                'type':'time',
+            }),
+            'join_condition': forms.Select(attrs={
+                'class':'join_condition',
+            }),
         }
         help_texts = {
             'category': '태그를 입력하세요. 공백문자로 태그를 구분하며 대소문자를 구분하지 않습니다.',
@@ -67,10 +96,31 @@ class AnnouncementForm(forms.ModelForm):
         model = Announcement
         fields = ('title', 'content',)
         labels = {
-            # 'title': '',
+            'title': '',
+            'content': '',
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class':'title',
+                'placeholder': '제목을 입력해주세요',
+            }),
+            'content': forms.Textarea(attrs={
+                'class':'content'
+            }),
+        }
+        
+        
+class StudyCommentForm(forms.ModelForm):
+    class Meta:
+        model = StudyComment
+        fields = ('content',)
+        labels = {
             # 'content': '',
         }
         widgets = {
-            'title': forms.TextInput(attrs={}),
-            'content': forms.Textarea(attrs={}),
+            'content': forms.Textarea(attrs={
+                'rows': '1',
+                'placeholder': '댓글을 입력하세요',
+                'class': 'comment-form',
+                }),
         }

@@ -3,7 +3,7 @@
 
 <form id="like-forms" action="{% url 'reviews:like' %}" method="post" data-object-identifier="{{ obj|id }}">
   {% csrf_token %}
-  {% if user in obj.like_users %}
+  {% if user in obj.like_users.all %}
     {% if obj|class == 'Problem' %}
     <input type="submit" value="좋아요 취소" id="{{ obj|id }}">
     {% elif obj|class == 'Review' %}

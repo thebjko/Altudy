@@ -2,15 +2,35 @@
 <!-- 소셜 인증 후 추가정보 받는 템플릿 -->
 
 {% load socialaccount %}
+{% load static %}
+
+{% block style %}
+  <link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS\accounts\social\social_signup.css' %}"
+  />
+{% endblock style %}
 
 {% block content %}
-  <h1>signup</h1>
-  <hr>
-  <form action="{% url 'socialaccount_signup' %}" method="POST">
+
+<div class="main__container">
+  <div class="main__logobox">
+    <img src="{% static 'IMAGE/altudy.png' %}" alt="알터디 로고" class="main__altudylogo">
+  </div>
+  <form action="{% url 'socialaccount_signup' %}" method="POST" class="main__social-signupbox">
     {% csrf_token %}
     <div>
-      {{ form.as_p }}
-      <input type="submit" value="회원가입">
+      <p>
+        <label for="id_username">이름</label>
+        {{ form.username }}
+      </p>
+      <p>
+        <label for="id_email">이메일</label>
+        {{ form.email }}
+      </p>
+      <input type="submit" value="회원가입" class="main__signupbutton">
     </div>
   </form>
+</div>
 {% endblock content %}

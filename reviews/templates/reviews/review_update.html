@@ -9,8 +9,7 @@
 {% endblock style %}
 {% block content %}
 <div class="main__container">
-  <form id="form" action="{% url 'reviews:review_update' form.instance.pk %}" method="post">
-    {% csrf_token %}
+  <form id="form" hx-put="{% url 'reviews:review_update' form.instance.pk %}">
     
     {% with form.content as content %}
     <div class="form-group" style="display: none;">
@@ -26,7 +25,7 @@
     {% with form.tags as tags %}
     <div class="form-group">
       <label for="{{ tags.id_for_label }}">{{ tags.label }}</label>
-      <input type="{{ tags.field.widget.input_type }}" class="form-control" id="" placeholder="{{ tags.label }}" name="{{ tags.name }}" />
+      <input type="{{ tags.field.widget.input_type }}" class="form-control" id="" placeholder="{{ tags.label }}" name="{{ tags.name }}" value="{% for tag in form.instance.tags.all %}{{ tag }} {% endfor %}"/>
     </div>
     {% endwith %}
     

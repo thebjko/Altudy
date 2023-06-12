@@ -1,57 +1,81 @@
-{% extends 'base.html' %}
+{% load static %} 
+{% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/studies/member.css' %}"
+/>
+{% endblock style %} 
+{% block right_content %} 
 
-{% block title %}{% endblock title %}
-
-
-{% block content %}
-<h1>멤버 관리 페이지</h1>
-<hr>
-
+{# 가입승인 스터디만 출력 #} 
 {% if study.join_condition == 1 %}
-  <!-- 승인이 필요한 스터디만 요청 정보 제공 -->
-  <div>
-    <p>참여요청</p>
+<section>
+  <h1 class="right_content-title">💓 가입 요청</h1>
   {% if join_requests %}
-    {% for request in join_requests %}
-      <div>
-        <span>{{ request }} 님께서 스터디에 참여를 요청하셨습니다</span>
-        <form action="{% url 'studies:accept' study.pk request %}" method="post">
-          {% csrf_token %}
-          <button type="submit">승인</button>
-        </form>
-        <form action="{% url 'studies:reject' study.pk request %}" method="post">
-          {% csrf_token %}
-          <button type="submit">거절</button>
-        </form>
-      </div>
-      <br>
-    {% endfor %}
+  {% for request in join_requests %}
+    <div class="join-request__container">
+        <div class="request-message">
+          <span>{{request}}</span> 님께서 <span>{{study.title}}</span>에 참여를 요청하셨습니다.
+        </div>
+        <div class="request-btns__containers">
+          <form action="{% url 'studies:accept' study.pk request %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="button-small create-btn">승인</button>
+          </form>
+          <form action="{% url 'studies:reject' study.pk request %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="button-small create-btn">거절</button>
+          </form>
+        </div>
+    </div>
+    <hr>
+  {% endfor %}
   {% else %}
-    <p>참여 요청이 없습니다</p>
+  <div class="null-message">🐲 가입 요청이 없습니다!</div>
   {% endif %}
-  </div>
-  <hr>
+</section>
 {% endif %}
 
-
-<div>
-  <p>멤버 관리</p>
+{# 멤버 관리 #}
+<section>
+  <h1 class="right_content-title">
+    🔎 멤버 관리
+  <span class="member-capacity__container"> ( <span>{{ study_members.count }}</span> / {{study.capacity}} )</span>
+  </h1>
   {% for member in study_members %}
-  <div>
-    <span>{{ member.user }}</span>
+  <div class="member__container">
     {% if member.permission == 3 %}
-      <span> - 조장</span>
+    <div class="member"> {{ member.user.emoji_username }} - </div>
+    <div class="member-leader"> 스터디장</div>
     {% else %}
-      <form action="{% url 'studies:expel' study.pk member.user %}" method="POST">
+        <div>{{ member.user.emoji_username }}</div>
+        <form action="{% url 'studies:expel' study.pk member.user %}" method="POST" onsubmit="return confirm('정말로 강퇴하시겠습니까?');">
         {% csrf_token %}
-        <input type="submit" value="강퇴">
-      </form>
+          <input type="submit" value="강퇴">
+        </form>
     {% endif %}
-    
-    <br>
+
   </div>
   {% endfor %}
-</div>
-<hr>
+</section>
 
-{% endblock content %}
+<section>
+  <h1 class="right_content-title">🔒 가입 조건 관리 </h1>
+  <form id="condition-form" method="post" action="{% url 'studies:condition' study_pk=study.pk condition_num=0 %}">
+    {% csrf_token %}
+  
+    <select id="condition-select" name="condition_num" data-condition="{{ study.join_condition }}" onchange="updateAction(this)">
+      <option value="1" {% if study.join_condition == 1 %}selected{% endif %}>승인 필요</option>
+      <option value="2" {% if study.join_condition == 2 %}selected{% endif %}>바로 가입</option>
+      <option value="3" {% if study.join_condition == 3 %}selected{% endif %}>가입 불가</option>
+    </select>
+  
+    <noscript>
+      <input type="submit" value="조건 업데이트">
+    </noscript>
+  </form>
+</section>
+
+
+{% endblock right_content %}

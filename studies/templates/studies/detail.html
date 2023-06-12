@@ -4,28 +4,28 @@
   type="text/css"
   href="{% static 'CSS/studies/detail.css' %}"
 />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/comment.css' %}"
+/>
 {% endblock style %}
 {% block content %}
-{# studies 앱에서 reviews 앱으로 넘어갈때 "localhost:8000/reviews/?study=n"로 넘기기 #} 
-{# 예비 코드 #} 
-{% comment %} 
-<a href="{% url 'reviews:index' %}?study={{ study.pk }}">test</a> 
-{% endcomment %}
-
-{% if request.user in study.studying_users.all %}
-<a href="{% url 'studies:mainboard' study.pk %}">
-  <p style="margin: 1rem 0; color: blue;">메인보드로 이동</p>
-</a>
-{% endif %}
 
 <main class="study__wrapper">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <a href="{% url 'main' %}" class="homebutton button-small">< HOME</a>
+    {% if request.user in study.studying_users.all %}
+    <a href="{% url 'studies:mainboard' study.pk %}"><p class="mainboardbutton button-small">MAINBOARD ></p></a>
+    {% endif %}
+  </div>
   {# 스터디 디테일 내용 #}
   <article>
     <div class="study__container">
       <div class="study__title">{{ study.title }}</div>
       <div class="study__userInfo">
         <div class="study__userInfo-badge">
-          <p>&#128035;</p>
+          <p>{{ study.user.emoji }}</p>
         </div>
         <div class="study__userInfo-username">{{ study.user }}</div>
       </div>
@@ -114,7 +114,7 @@
             {% endfor %}
             {% else %}
             <div class="cancel-margintop">
-              미정
+              요일 미정
             </div>
             {% endif %}
             
@@ -191,36 +191,111 @@
         {{ study.description|linebreaksbr }}
         <div class="study__content-joinContainer">
           {% if is_studying == 'joined' %}
-          <form action="{% url 'studies:withdraw' study.pk %}" method="post">
-            {% csrf_token %}
-            <button type"submit" class="button-large">스터디 탈퇴</button>
-            {# TODO: 스터디장은 스터디 탈퇴가 불가해야함, 어떤 식으로 보일지 의논 필요 #}
-          </form>
+            {% if study.user == request.user %}
+              {% if  study.is_recruiting == 2 %}
+                <button class="button-large" disabled>모집 마감</button>
+                <a href="{% url 'studies:mainboard' study.pk %}" ><button class="button-large">메인보드</button></a>
+                {% else %}
+                <form id="condition-form" method="post" action="{% url 'studies:condition' study.pk 3 %}">
+                    {% csrf_token %}
+                    <button type="button" class="button-large" onClick="javascript:isComfirmJoin()">모집마감</button>
+                </form>
+              {% endif %}
+              {% else %}
+              <form action="{% url 'studies:withdraw' study.pk %}" method="post">
+                {% csrf_token %}
+                <button type"submit" class="button-large expel-btn">스터디 탈퇴</button>
+              </form>
+              <a href="{% url 'studies:mainboard' study.pk %}" ><button class="button-large">메인보드</button></a>
+            {% endif %}
           {% elif is_studying == 'join_request' %}
-          <form action="{% url 'studies:cancel' study.pk %}" method="post">
-            {% csrf_token %}
-            <button class="button-large" disabled>참여 요청 중</button>
-            <button type="submit" class="button-large">참여 취소</button>
-          </form>
+            <form action="{% url 'studies:cancel' study.pk %}" method="post">
+              {% csrf_token %}
+              <button class="button-large" disabled>참여 요청 중</button>
+              <button type="submit" class="button-large">참여 취소</button>
+            </form>
           {% else %}
-          <form action="{% url 'studies:join' study.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="button-large">스터디 참여</button>
-          </form>
-          {# 스터디 참여 요청 기능 완성 후 변환 필요 #}
-          {% endif %}
+            {% if  study.is_recruiting == 2  %}
+              <button class="button-large" disabled>모집 마감</button>
+            {% else %}
+              <form action="{% url 'studies:join' study.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="button-large">스터디 참여</button>
+              </form>
+            {% endif %}
+            {% endif %}
+
         </div>
       </div>
     </div>
     <div class="category__container">
       {% for category in study.category.all|dictsort:'name' %}
-      <span class="category-item">#{{ category }}</span>
+      <a href="{% url 'studies:index' %}?category={{category}}">
+        <span class="category-item">#{{ category }}</span>
+      </a>
       {% endfor %}
     </div>
   </article>
   <hr />
+  
   {# 댓글 #}
-  <article></article>
+  <article>
+    {# 댓글 작성 #}
+    <form action="{% url 'studies:comment_create' study.pk %}" method="post" class="comment-create-form">
+      {% csrf_token %}
+      {{ comment_form.content }}
+      <button type="submit" class="comment-btn button-small">댓글 작성</button>
+    </form>
+    <hr>
+
+  {% for comment in comments reversed %}
+  <div class="comment">
+    <div class="comment-container">
+      <div class="comment-header">
+        <div class="comment-header-top">
+          <p class="comment-user">{{ comment.user }}</p>         
+          {% if comment.user == request.user %}
+            <form action="" class="comment-update-form" data-study-id="{{ study.pk }}" data-comment-id="{{ comment.pk }}">
+              <button class="comment-update-btn" >
+                <i class="bi bi-pencil-square"></i>
+              </button>
+            </form>
+            <form action="{% url 'studies:comment_delete' study.pk comment.pk %}" method="post" class="comment-delete-form">
+              {% csrf_token %}
+              <button type="submit" class="comment-delete-btn">
+                <i class="bi bi-trash"></i>
+              </button>
+            </form>
+          {% endif %}
+        </div>
+        <p class="comment-time">{{ comment.created_at_string }}</p>
+      </div> 
+      <p id="comment-content-{{ comment.pk }}">{{ comment.content }}</p>
+    </div>
+  </div>
+  {% empty %}
+  <p class="comment-empty">댓글이 없습니다.</p>
+  {% endfor %}
+  </article>
 </main>
+
+<script>
+  function isComfirmJoin(){
+    message = "모집을 마감하시겠습니까?";
+    const confirmation = window.confirm(message);
+  
+    if (confirmation) {
+      const form = document.getElementById('condition-form');
+      form.submit();
+    } else {
+      return false
+    }
+  }
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'JS/comment.js' %}"></script>
+
 
 {% endblock content %}

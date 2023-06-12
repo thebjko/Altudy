@@ -19,9 +19,36 @@
   border-radius: var(--border-radius-soft);
 }
 
+.main__socialbox {
+  margin-top: 20px;
+  padding-top: 15px;
+  text-align: center;
+  border-top: 1px solid var(--color-gray-5);
+}
+
 .main__altudylogo {
   width: 60px;
   height: auto;
+}
+
+.main__updatebox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.main__updatebox label {
+  margin: 10px 0;
+  color: var(--color-gray-5);
+  display: flex;
+  align-items: center;
+}
+
+.main__updatebox input {
+  background-color: var(--color-gray-1);
+  border: 1px solid var(--color-gray-4);
 }
 
 .main__title {
@@ -30,7 +57,7 @@
   margin-bottom: 30px;
 }
 
-.update-button {
+.update-button, .password-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +71,13 @@
   cursor: pointer;
 }
 
-.update-button:hover {
+.update-button:hover, .password-button:hover {
   background-color: var(--color-gray-6);
   color: var(--color-gray-1);
+}
+
+.password-button-border {
+  margin-top: 20px;
+  border-top: 1px solid var(--color-gray-5);
+
 }

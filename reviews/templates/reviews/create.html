@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
+{% block head %}
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css"
+  />
+{% endblock head %}
+
 {% block style %}
 <link
   rel="stylesheet"
@@ -11,7 +22,6 @@
 {% block content %}
 <div class="main__container">
   <form id="form" action="{% url 'reviews:create' %}" method="post">
-    {% comment %} <input type="hidden" name="study" value="{{ study_id }}"> {% endcomment %}
     {% csrf_token %}
     
     {% with form.title as title %}
@@ -24,7 +34,7 @@
     {% with form.url as url %}
     <div class="form-group">
       <label for="{{ url.id_for_label }}">{{ url.label }}</label>
-      <input type="{{ url.field.widget.input_type }}" class="form-control" id="" placeholder="{{ url.label }}" name="{{ url.name }}" />
+      <input type="{{ url.field.widget.input_type }}" class="form-control" id="" placeholder="{{ url.label }}" name="{{ url.name }}" value="https://"/>
     </div>
     {% endwith %}
 
@@ -46,8 +56,9 @@
     </div>
     <p class="help-text">{{ tags.help_text }}</p>
     {% endwith %}
-    <button class="submit-button button-small" type="submit">문제 작성하기</button>
+    <button class="submit-button button-small" type="submit">문제 등록하기</button>
   </form>
 </div>
+
 <script src="{% static 'reviews/toastui.js' %}"></script>
 {% endblock content %}

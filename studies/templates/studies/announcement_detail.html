@@ -1,30 +1,39 @@
 {% extends 'base.html' %}
-
-{% block title %}{% endblock title %}
+{% load static %}
+{% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/studies/announcement/detail.css' %}"
+/>
+{% endblock style %}
+{% block title %}공지{% endblock title %}
 
 
 {% block content %}
-<h1 class="">스터디 공지 - [{{ announcement.pk }}]</h1>
+<div class="main__container">
+  <p class="title">{{ announcement.title }}</p>
+  <div class="content-box">
+  <div class="date">
+    <p>{{ announcement.created_at }}</p>
+    {% comment %} <p>수정날짜 - {{ announcement.updated_at }}</p> {% endcomment %}
+  </div>
 
-<hr>
-
-<p>제목 - {{ announcement.title }}</p>
-<p>내용 - {{ announcement.content }}</p>
-<p>생성날짜 - {{ announcement.created_at }}</p>
-<p>수정날짜 - {{ announcement.updated_at }}</p>
-
+  <p class="content">{{ announcement.content|linebreaksbr }}</p>
+</div>
 {% if request.user == leader %}
-<div style="margin: 3rem 0;">
+<div class="button-box">
   <a href="{% url 'studies:announcement_update' study_pk announcement.pk %}">
-    공지 수정
+    <div class="button button-small">공지 수정</div>
   </a>
   <form action="{% url 'studies:announcement_delete' study_pk announcement.pk %}" method="post">
     {% csrf_token %}
-    <button type="submit">공지 삭제</button>
+    <button class="button button-small" type="submit">공지 삭제</button>
   </form>
 </div>
 {% endif %}
-
-<a href="{% url 'studies:announcement' study_pk %}">스터디 공지로 돌아가기</a>
-
+<a href="{% url 'studies:announcement' study_pk %}">
+  <div class="button button-small">목록으로</div>
+</a>
+</div>
 {% endblock content %}

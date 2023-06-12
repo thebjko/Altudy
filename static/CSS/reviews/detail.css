@@ -80,6 +80,20 @@ hgroup {
   padding: 10px 0;
 }
 
+/* 리뷰 태그 */
+.tag-item {
+  background-color: var(--color-white);
+  font-size: var(--font-micro);
+  color: var(--color-gray-6);
+  font-weight: var(--weight-regular);
+
+  padding: 5px 8px;
+  margin: 1px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px var(--color-gray-4);
+}
+
+
 /* 버튼 스타일 초기화 */
 .reset-style {
   border: none;

@@ -61,6 +61,9 @@
 .card__language,
 .card__badge,
 .card__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 1.6em;
   height: 1.6em;
   border-radius: 50%;
@@ -71,8 +74,6 @@
 }
 
 .card__day{
-  text-align: center;
-  line-height: 1.6em;
   color: var(--color-gray-6);
 }
 

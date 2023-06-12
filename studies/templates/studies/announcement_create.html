@@ -1,19 +1,24 @@
 {% extends 'base.html' %}
-
-{% block title %}{% endblock title %}
-
-
+{% load static %}
+{% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'CSS/studies/announcement/create.css' %}"
+/>
+{% endblock style %}
+{% block title %}공지{% endblock title %}
 {% block content %}
-<h1 class="">스터디 공지 생성</h1>
-
-<hr>
-
-<form action="{% url 'studies:announcement_create' study_pk %}" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">생성</button>
-</form>
-
-<a href="{% url 'studies:announcement' study_pk %}">스터디 공지로 돌아가기</a>
-
+<div class="main__container">
+  <form action="{% url 'studies:announcement_create' study_pk %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="button-box">
+      <button class="button button-small" type="submit">생성</button>  
+      <a href="{% url 'studies:announcement' study_pk %}">
+        <div class="button button-small">목록으로</div>
+      </a>
+    </div>
+  </form>
+</div>
 {% endblock content %}

@@ -1,32 +1,46 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block style %}
+{% block right_content %}
 
-{% endblock style %} {% block content %}
-<h1>학습 관리</h1>
-<hr>
+<div class="prob-search__container">
+  <div class="prob-top__box">
+    <div class="right_content-title">✍️문제</div>
+    <div class="prob__search">
+      <input type="text" data-study-id="{{ study.pk }}" id="prob-search-input" class="prob__search-input" placeholder="문제를 검색해보세요!">
+      <div class="prob__search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+      </div>
+    </div>
 
-<div>
-  <p>문제 검색</p>
-  <input type="text" data-study-id="{{ study.pk }}" id="prob-search-input">
+  </div>
   <div>
-    <span>제출하지 않은 과제</span>
-    <button id="is-solved-btn">off</button>
+    <div class="probSubmitToggle__container">
+      <div class="probSubmitToggel-title">미제출 과제</div>
+      <input type="checkbox" id="toggle" hidden class="prob__toggle"> 
+      <label for="toggle" class="toggleSwitch">
+        <span class="toggleButton"></span>
+      </label>
+    </div>
   </div>
 </div>
-<hr>
 
 <div>
-  <h3>문제</h3>
-  <a href="{% url 'reviews:create' %}?study={{ study.pk }}">문제 생성하기</a>
-  <hr>
+
   <div id="prob-search-list">
     <!-- studies/search.js에서 요소 추가, js 내 주석 참고 -->
     <!-- ul > li > a 구조 -->
   </div>
 </div>
-<hr>
+<div class="prob__create-btn-container">
+  <a href="{% url 'reviews:create' %}?study={{ study.pk }}" class="prob__create-btn">문제 생성하기</a>
+</div>
+
+<div class="pagination-container">
+  <!-- 페이지네이션 버튼 -->
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{% static 'studies/search.js' %}"></script>
-{% endblock content %}
+<script src="{% static 'JS/search.js' %}"></script>
+
+{% endblock right_content %}

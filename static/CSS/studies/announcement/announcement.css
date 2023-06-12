@@ -1,0 +1,27 @@
+.main__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.content-box {
+  display: flex;
+  align-items: center;
+  width: 800px;
+  height: 50px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: var(--color-gray-2);
+  border-radius: var(--border-radius-soft);
+}
+
+.button {
+  width: 150px;
+  height: 30px;
+  margin: 50px 20px;
+}
+
+.button:hover {
+  background-color: var(--color-green);
+}

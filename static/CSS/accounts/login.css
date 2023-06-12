@@ -97,3 +97,7 @@
   background-color: var(--color-green);
   color: var(--color-gray-1);
 }
+
+.main__socailbutton-container {
+  width: 60%;
+}

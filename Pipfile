@@ -29,6 +29,7 @@ celery = "*"
 cryptography = "*"
 graphene-django = "*"
 graphene = "*"
+django-htmx = "*"
 
 [dev-packages]
 

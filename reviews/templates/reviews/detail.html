@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
+{% block head %}
+{% endblock head %}
+
 {% block style %}
 <link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'CSS/reviews/detail.css' %}"
+rel="stylesheet"
+type="text/css"
+href="{% static 'CSS/reviews/detail.css' %}"
 />
-{% endblock style %}
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css"
+/>
+
+{% endblock style %} 
 {% block content %}
 <div class="main__container">
   <div class="probelm-box">
@@ -17,19 +29,22 @@
     </hgroup>
     <div class="probelm-content-box">
       <a href="{{ problem.url }}" class="problem-url">{{ problem.url }}</a>
-      <p class="problem-description">{{ problem.description|markdown }}</p>
+      <div id="viewer">{{ problem.description|json_script:'problem_description' }}</div>
+    </div>
+    <div class="problem-tag__container">
+      {% for tag in problem.tags.all|dictsort:'name' %}
+      <a href="">
+        <span class="tag-item">#{{ tag }}</span>
+      </a>
+      {% endfor %}
     </div>
     <div class="problem-button-box">
       {% if user == problem.user %}
       <div style="display: flex;">
-        <form action="{% url 'reviews:update' problem.pk %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="gray-button button-small joinbutton reset-style">문제 수정</button>
-        </form>
-        <form action="{% url 'reviews:delete' problem.pk %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="gray-button button-small joinbutton reset-style">문제 삭제</button>
-        </form>        
+        <a href="{% url 'reviews:update' problem.pk %}" type="submit" class="gray-button button-small joinbutton reset-style">문제 수정</a>
+        <button hx-delete="{% url 'reviews:delete' problem.pk %}"
+                hx-confirm="문제를 삭제하시겠습니까?"
+                class="gray-button button-small joinbutton reset-style">문제 삭제</button>
       </div>
       {% endif %}
       {% include 'reviews/components/like.html' with obj=problem %}
@@ -43,34 +58,39 @@
     {% for review in problem.review_set.all %}
     <div class="review-content">
       <li>{{ review.content|markdown }}</li>
-      <div class="review-button-box">
-        {% if user == review.user %}
-        <form action="{% url 'reviews:review_update' review.pk %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="button-small joinbutton reset-style">리뷰 수정</button>
-        </form>          
-        {% endif %}
-        {% include 'reviews/components/like.html' with obj=review %}
-        <a href="{% url 'reviews:comment_create' review.pk %}" class="button-small joinbutton">댓글 작성</a>
-        <ul>
-          {% for comment in review.comment_set.all %}
-          <li>{{ comment.content|markdown }}</li>
-          <form action="{% url 'reviews:comment_update' comment.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit">댓글 수정</button>
-          </form>
-          <form action="{% url 'reviews:comment_delete' comment.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit">댓글 삭제</button>
-          </form>
-          {% include 'reviews/components/like.html' with obj=comment %}
-          {% endfor %}
+      <div class="review-tag__container">
+        {% for tag in review.tags.all|dictsort:'name' %}
+        <a href="">
+          <span class="tag-item">#{{ tag }}</span>
+        </a>
+        {% endfor %}
+      </div>
+      {% if user == review.user %}
+      <div class="d-flex justify-content-end">
+        <a href="{% url 'reviews:review_update' review.pk %}" class="btn btn-primary mx-3">리뷰 수정</a>
+        <div hx-delete="{% url 'reviews:review_delete' review.pk %}"
+             hx-confirm="리뷰를 삭제하시겠습니까?"
+             class="btn btn-primary">리뷰 삭제</div>
+      </div>
+      {% elif user.is_authenticated %}
+      {% include 'reviews/components/like.html' with obj=review %}
+      {% endif %}
+      <div>
+        <ul id="comment-list-{{ review.pk }}" hx-swap="outerHTML">
+          {% include 'reviews/comments/list.html' with obj=comment %}
         </ul>
+        <hr>
+        {# 버튼 클릭시 아래에 댓글 작성창이 생성됩니다. #}
+        <div id="create-comment-on-{{ review.pk }}" hx-target="this" hx-swap="outerHTML" class="d-flex flex-row-reverse">
+          <button id="add-comment-btn-{{ review.pk }}" hx-get="{% url 'reviews:comment_create' review.pk %}" class="button-small joinbutton">댓글 작성</button>
+        </div>
       </div>
     </div>
     {% endfor %}
   </ul>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'reviews/like.js' %}"></script>
+<script src="{% static 'reviews/toastViewer.js' %}"></>
 {% endblock content %}

@@ -1,0 +1,49 @@
+.main__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.title {
+  width: 800px;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-gray-3);
+  font-size: var(--font-medium);
+  font-weight: var(--weight-bold);
+}
+
+.date {
+  color: var(--color-gray-6);
+}
+
+.content {
+  width: 800px;
+  height: 300px;
+  resize: none;
+  margin: 20px 0;
+  border: 1px solid var(--color-gray-4);
+  font-size: var(--font-regular);
+}
+
+.content:focus {
+  outline: none;
+}
+
+.button-box {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  width: 150px;
+  height: 30px;
+  margin: 50px 20px;
+}
+
+.button:hover {
+  background-color: var(--color-green);
+}

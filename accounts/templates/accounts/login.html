@@ -22,15 +22,17 @@
             <a href="{% provider_login_url 'github'%}"><img src="{% static 'IMAGE/github.png' %}" alt="깃허브 로고" class="main__sociallogo"></a>
             <a href="{% provider_login_url 'google'%}"><img src="{% static 'IMAGE/google.png' %}" alt="구글 로고" class="main__sociallogo"></a>
           </div>
-          <div>
-            <p class="main__signupbutton-title">알터디 계정이 없으신가요?</p>
-            <input type="submit" value="altudy 회원가입" class="main__signupbutton">
-          </div>
-          <div>
-            <p class="main__signupbutton-title">비밀번호를 잊으셨나요?</p>
-            <a href="{% url 'account_reset_password' %}" class="main__signupbutton">비밀번호 초기화</a>
-          </div>
         </div>
       </form>
+      <div class="main__socailbutton-container">
+        <div>
+          <p class="main__signupbutton-title">알터디 계정이 없으신가요?</p>
+          <a href="{% url 'accounts:signup' %}" class="main__signupbutton">altudy 회원가입</a>
+        </div>
+        <div>
+          <p class="main__signupbutton-title">비밀번호를 잊으셨나요?</p>
+          <a href="{% url 'account_reset_password' %}" class="main__signupbutton">비밀번호 초기화</a>
+        </div>
+      </div>
     </div>
 {% endblock content %}
