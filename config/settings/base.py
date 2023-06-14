@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'daphne',
     'chat',
     'accounts',
-    'corsheaders',
+    # 'corsheaders',
     'reviews',
     'studies',
     'django_extensions',
@@ -62,7 +62,7 @@ TUI_EDITOR_LANGUAGE = ['ko']
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -264,6 +264,6 @@ CHANNEL_LAYERS = {
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'
 
 # django-cors-headers
-CORS_ALLOWED_ORIGINS = [
-    'http://43.202.59.123',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://43.202.59.123',
+# ]
