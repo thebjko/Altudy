@@ -248,10 +248,6 @@ CELERY_BEAT_SCHEDULE = {
     # },
 }
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
-
 # django-cors-headers
 CORS_ALLOWED_ORIGINS = [
     'http://43.202.59.123',
