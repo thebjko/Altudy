@@ -2,7 +2,7 @@
 .comment {
   margin: 30px 50px;
   padding-bottom: 30px;
-  border-bottom: 1px solid var(--color-gray-2)
+  /* border-bottom: 1px solid var(--color-gray-2) */
 }
 
 .comment-create-form {
@@ -16,6 +16,13 @@
   width: 80%;
   min-width: 300px;
   border-radius: var(--border-radius-hard);
+  border: none;
+}
+
+.comment-create-form textarea:focus {
+  border-color:var(--color-lightgreen);
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(187,216,133,.25)
 }
 
 .comment-update-form {
@@ -25,7 +32,6 @@
 .comment-update-btn {
   border: none;
   background-color: transparent;
-  color: rgb(68, 114, 241);
 }
 
 .comment-update-field-form input, textarea{
@@ -36,14 +42,14 @@
 }
 
 .comment-delete-form {
-  height: 1px;
+  height: 2px;
 }
 
 .comment-delete-btn {
   margin-top: 1px;
   border: none;
+  color: red;
   background-color: transparent;
-  color: rgb(221, 53, 23);
 }
 
 .comment-container {
@@ -53,12 +59,28 @@
   min-width: 300px;
 }
 
+.comment-user-ud__container {
+  display: flex;
+  display: none;
+}
+
+.comment-container:hover .comment-user-ud__container{
+  display: flex;
+}
+
+.comment-body {
+  border-radius: 10px;
+  background-color: var(--color-white);
+  padding: 10px 10px;
+}
+
 .comment-header {
   margin-bottom: 10px;
 }
 
 .comment-header-top {
   display: flex;
+  justify-content: space-between;
 }
 
 .comment-user {
@@ -69,6 +91,7 @@
 
 .comment-time {
   margin-top: 5px;
+  margin-left: 3px;
   color: var(--color-gray-5);
 }
 
@@ -76,4 +99,13 @@
   margin: 40px 0;
   color: var(--color-gray-5);
   text-align: center;
+}
+
+.comment-ud-btn__container{
+  display: flex;
+}
+
+.comment-ud-btn__container button {
+  margin-right: 10px;
+  padding: 5px 10px;
 }

@@ -29,19 +29,26 @@ const displayResults = (results) => {
   results.forEach((result) => {
     const liElement = document.createElement('li')
     const problemLink = document.createElement('a')
-    const problemTime = document.createElement('span')
-  
+    const problemInfo = document.createElement('div')
+    const problemReviewCount = document.createElement('span')
+    const problemDate = document.createElement('span')
+
+    problemInfo.classList.add('problem-info-container')
+    problemReviewCount.classList.add('bi','bi-code-square','review-count')
+
     // 문제 제목 담기는 li, a 태그 class, id 추가
     liElement.classList.add('problem-ele')
     liElement.setAttribute('id', 'my-id')
-    // problemLink.classList.add('my-class')
-    // problemLink.setAttribute('id', 'my-id')
 
-    problemLink.href = `http://127.0.0.1:8000/reviews/${result.id}/`
+    // problemLink.href = `http://127.0.0.1:8000/reviews/${result.id}/`
+    problemLink.href = `/reviews/${result.id}/`;
     problemLink.textContent = result.title;
-    problemTime.textContent = result.createdAt;
+    problemDate.textContent = result.createdAt.split(' ')[0];
+    problemReviewCount.textContent = result.reviewCount;
     liElement.appendChild(problemLink)
-    liElement.appendChild(problemTime)
+    problemInfo.appendChild(problemReviewCount)
+    problemInfo.appendChild(problemDate)
+    liElement.append(problemInfo)
     ulElement.appendChild(liElement)
   })
   probSearchList.appendChild(ulElement)
@@ -214,4 +221,15 @@ if (!isSolvedValue) {
 
 probSearchInput.focus()
 
+}
+
+function searchProblemsByTag(tag) {
+  fetch(`/studies/{{ problem.study.pk }}/mainboard/problem/search?tags=${encodeURIComponent(tag)}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.problems)
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }

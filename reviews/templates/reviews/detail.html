@@ -25,39 +25,85 @@ href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"
   <div class="probelm-box">
     <hgroup>
       <h1 class="problem-title">{{ problem.title }}</h1>
-      <h4 class="problem-user"><span>&#128035;</span> {{ problem.user }}</h4>
+      <div class="study__userInfo">
+        <div class="study__userInfo-badge">
+          <p>{{ problem.user.emoji }}</p>
+        </div>
+        <div class="study__userInfo-username">{{ problem.user }}</div>
+      </div>
     </hgroup>
+    <div class="problem__info">
+      <i class="bi bi-hand-thumbs-up"><span id="like-count-{{ problem|id }}">{{problem.like_users.count}}</span></i>
+      <i id="review-count-{{ problem|id }}" class="bi bi-code-square"><span>{{problem.review_set.all.count}}</span></i>
+    </div>
+    <div class="study__crudInfo">
+      {{ problem.created_at }}
+      {# 스터디 수정/삭제 #}
+      {% if request.user == problem.user %}
+      <a
+        class="study__crudInfo-item"
+        href="{% url 'reviews:update' problem.pk %}"
+        >수정</a
+      >
+      <button hx-delete="{% url 'reviews:delete' problem.pk %}" hx-confirm="문제를 삭제하시겠습니까?" class="study__crudInfo-item">삭제</button>
+      {% endif %}
+      
+    </div>
+    <hr>
+    {# TODO: 좋아요 수정 #}
+    {% include 'reviews/components/like.html' with obj=problem %}
     <div class="probelm-content-box">
-      <a href="{{ problem.url }}" class="problem-url">{{ problem.url }}</a>
+      <div class="problem-url___container">
+        <h3>prolem link</h3><div class="separator"></div><a href="{{ problem.url }}" class="problem-url">{{ problem.url }}</a>
+      </div>
       <div id="viewer">{{ problem.description|json_script:'problem_description' }}</div>
     </div>
     <div class="problem-tag__container">
       {% for tag in problem.tags.all|dictsort:'name' %}
-      <a href="">
-        <span class="tag-item">#{{ tag }}</span>
-      </a>
+        <form id="form-{{ tag }}" class="tag-form" action="{% url 'studies:problem_search' problem.study.pk %}">
+          <input type="hidden" name="tags" value="{{ tag.name }}">
+          <button type="submit" class="tag-item">#{{ tag }}</button>
+        </form>
       {% endfor %}
+
     </div>
-    <div class="problem-button-box">
-      {% if user == problem.user %}
-      <div style="display: flex;">
-        <a href="{% url 'reviews:update' problem.pk %}" type="submit" class="gray-button button-small joinbutton reset-style">문제 수정</a>
-        <button hx-delete="{% url 'reviews:delete' problem.pk %}"
-                hx-confirm="문제를 삭제하시겠습니까?"
-                class="gray-button button-small joinbutton reset-style">문제 삭제</button>
-      </div>
-      {% endif %}
-      {% include 'reviews/components/like.html' with obj=problem %}
-    </div>
-    <div class="submit-button">
-      <a href="{% url 'reviews:review_create' problem.pk %}" class="button-small joinbutton reset-style">리뷰 작성하기</a>
+    <hr>
+
+    <div class="submit-button__container">
+      <a href="{% url 'reviews:review_create' problem.pk %}" class="button-small joinbutton reset-style">코드 등록하기</a>
     </div>
   </div>
 
-  <ul class="review">
-    {% for review in problem.review_set.all %}
-    <div class="review-content">
-      <li>{{ review.content|markdown }}</li>
+  {# 코드 #}
+  <ul class="review__container">
+    {% if problem.review_set.all %}
+    {% for review in problem.review_set.all|sort_by_likes %}
+    <div class="review-content" id="myCode-{{ review.user.id }}">
+      <div class="study__userInfo">
+        <div class="study__userInfo-badge">
+          <p>{{ review.user.emoji }}</p>
+        </div>
+        <div class="study__userInfo-username">{{ review.user }}</div>
+      </div>
+      <div class="problem__info review__info">
+        <i class="bi bi-hand-thumbs-up"><span id="like-count-{{ review|id }}">{{review.like_users.count}}</span></i>
+        <i class="bi bi-chat-dots"><span id="comment-count-{{ review|id }}">{{review.comment_set.count}}</span></i>
+      </div>
+      <div class="study__crudInfo">
+        {{ review.created_at }}
+        {# 코드 수정/삭제 #}
+        {% if request.user == review.user %}
+        <a
+          class="study__crudInfo-item"
+          href="{% url 'reviews:review_update' review.pk %}"
+          >수정</a
+        >
+        <button hx-delete="{% url 'reviews:review_delete' review.pk %}" hx-confirm="문제를 삭제하시겠습니까?" class="study__crudInfo-item">삭제</button>
+        {% endif %}
+      </div>
+      <hr>
+      {% include 'reviews/components/like.html' with obj=review %}
+      <div id="reviewViewer">{{ review.content|json_script:'review.content' }}</div>
       <div class="review-tag__container">
         {% for tag in review.tags.all|dictsort:'name' %}
         <a href="">
@@ -65,32 +111,55 @@ href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"
         </a>
         {% endfor %}
       </div>
-      {% if user == review.user %}
-      <div class="d-flex justify-content-end">
-        <a href="{% url 'reviews:review_update' review.pk %}" class="btn btn-primary mx-3">리뷰 수정</a>
-        <div hx-delete="{% url 'reviews:review_delete' review.pk %}"
-             hx-confirm="리뷰를 삭제하시겠습니까?"
-             class="btn btn-primary">리뷰 삭제</div>
-      </div>
-      {% elif user.is_authenticated %}
-      {% include 'reviews/components/like.html' with obj=review %}
-      {% endif %}
-      <div>
-        <ul id="comment-list-{{ review.pk }}" hx-swap="outerHTML">
-          {% include 'reviews/comments/list.html' with obj=comment %}
-        </ul>
-        <hr>
+      <hr>
+      <section class="comment-section">
         {# 버튼 클릭시 아래에 댓글 작성창이 생성됩니다. #}
         <div id="create-comment-on-{{ review.pk }}" hx-target="this" hx-swap="outerHTML" class="d-flex flex-row-reverse">
-          <button id="add-comment-btn-{{ review.pk }}" hx-get="{% url 'reviews:comment_create' review.pk %}" class="button-small joinbutton">댓글 작성</button>
+          <button id="add-comment-btn-{{ review.pk }}" hx-get="{% url 'reviews:comment_create' review.pk %}" class="button-small joinbutton">댓글 쓰기</button>
+        </div>
+        <div class="comments__wrapper">
+          <ul id="comment-list-{{ review.pk }}" hx-swap="outerHTML">
+            {% include 'reviews/comments/list.html' with obj=comment %}
+          </ul>
         </div>
       </div>
-    </div>
+    </section>
     {% endfor %}
+    {% else %}
+    <div class="null-message">🐲 문제에 코드를 등록해보세요!</div>
+    {% endif %}
+
   </ul>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'reviews/like.js' %}"></script>
-<script src="{% static 'reviews/toastViewer.js' %}"></>
+<script src="{% static 'reviews/toastViewer.js' %}"></script>
+
+<script>
+  const tagForms = document.querySelectorAll('.tag-form');
+  tagForms.forEach((form) => {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const tag = form.querySelector('input[name="tags"]').value;
+    searchProblemsByTag(tag);
+    });
+  });
+
+  function searchProblemsByTag(tag) {
+    fetch(`http://127.0.0.1:8000/studies/{{ problem.study.pk }}/mainboard/problem/search?tags=${encodeURIComponent(tag)}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.problems)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+</script>
+
+<script src="{% static 'reviews/countComment.js' %}"></script>
+
 {% endblock content %}

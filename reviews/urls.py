@@ -16,4 +16,5 @@ urlpatterns = [
     path('comment_create/<int:review_pk>/', views.comment_create, name='comment_create'),
     path('comment_update/<int:comment_pk>/', views.comment_update, name='comment_update'),
     path('comment_delete/<int:comment_pk>/', views.comment_delete, name='comment_delete'),
+    path('comment_count/<int:review_pk>/', views.get_comment_count, name='get_comment_count'),
 ]

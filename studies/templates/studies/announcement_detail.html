@@ -7,33 +7,38 @@
   href="{% static 'CSS/studies/announcement/detail.css' %}"
 />
 {% endblock style %}
-{% block title %}공지{% endblock title %}
+{% block title %}{{ announcement.study }}의 공지사항{% endblock title %}
 
 
 {% block content %}
 <div class="main__container">
-  <p class="title">{{ announcement.title }}</p>
-  <div class="content-box">
-  <div class="date">
-    <p>{{ announcement.created_at }}</p>
-    {% comment %} <p>수정날짜 - {{ announcement.updated_at }}</p> {% endcomment %}
-  </div>
-
-  <p class="content">{{ announcement.content|linebreaksbr }}</p>
-</div>
-{% if request.user == leader %}
-<div class="button-box">
-  <a href="{% url 'studies:announcement_update' study_pk announcement.pk %}">
-    <div class="button button-small">공지 수정</div>
+  <a class="study-title" href="{% url 'studies:mainboard' study_pk %}">
+    < {{ announcement.study }}
   </a>
-  <form action="{% url 'studies:announcement_delete' study_pk announcement.pk %}" method="post">
-    {% csrf_token %}
-    <button class="button button-small" type="submit">공지 삭제</button>
-  </form>
-</div>
-{% endif %}
-<a href="{% url 'studies:announcement' study_pk %}">
-  <div class="button button-small">목록으로</div>
-</a>
+  <a href="{% url 'studies:announcement' study_pk %}">
+    <h1>📢 공지사항</h1>
+  </a>
+  <p class="title">{{ announcement.title }}
+    <div class="date">
+      <p>{{ announcement.created_at }}</p>
+    </div>
+  </p>
+  <div class="content-box">
+    <p class="content">{{ announcement.content|linebreaksbr }}</p>
+  </div>
+  <div class="button-box">
+    {% if request.user == leader %}
+    <a href="{% url 'studies:announcement_update' study_pk announcement.pk %}">
+      <div class="button button-small">공지 수정</div>
+    </a>
+    <form action="{% url 'studies:announcement_delete' study_pk announcement.pk %}" method="post">
+      {% csrf_token %}
+      <button class="button button-small" type="submit">공지 삭제</button>
+    </form>
+    {% endif %}
+    {% comment %} <a href="{% url 'studies:announcement' study_pk %}">
+      <div class="button button-small list">공지 목록으로</div>
+    </a> {% endcomment %}
+  </div>
 </div>
 {% endblock content %}

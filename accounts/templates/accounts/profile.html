@@ -36,17 +36,26 @@
     <section class="right_content-item__wrapper">
       <div>
         <h1 class="profile-title">🔗 회원정보</h1>
-        <div class="profile-id"><span>아이디 </span>{{ person.username }}</div>
-        <div class="profile-email"><span>이메일 </span>{{ person.email }}</div>
+        <div class="profile-id"><span class="profile-id1">아이디 </span>{{ person.username }}</div>
+        <div class="profile-email"><span class="profile-email1">이메일 </span>{{ person.email }}</div>
         <div class=" profile-exp">
-          <p>내 레벨</p>
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: {{ person.get_progress_percentage }}%"><p>EXP {{ person.get_progress_percentage }}% ({{ person.get_experience_from_level }} / {{ next_level_exp }})</p></div>
+          <p class="profile-exp1">내 레벨</p>
+          <div class="progress-container">
+            {% if person.get_previous_emoji %}
+              <span class="emoji">{{ person.get_previous_emoji }}</span>
+            {% endif %}
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: {{ person.get_progress_percentage }}%"></div>
+              <div class="progress-text">
+                <p>EXP {{ person.get_progress_percentage }}% ({{ person.get_experience_from_level }} / {{ next_level_exp }})</p>
+              </div>
+            </div>
+            {% if person.get_next_emoji %}
+              <span class="emoji">{{ person.get_next_emoji }}</span>
+            {% endif %}
           </div>
-          <p>LV. {{ person.get_level }}</p>
-
+          <p>LV. {{ person.get_level }} {{person.emoji}}</p>
         </div>
-
         <div class="button-box">
           <a href="{% url 'accounts:update' %}"><div class="create-btn button-small">회원정보수정</div></a>
           <form action="{% url 'accounts:delete' %}" method="POST">
@@ -62,7 +71,6 @@
         <h1 class="profile-title">📤 내가 주최한 스터디</h1>
         <div>
           {% if host_studies  %}
-          <p>hi</p>
           <section class="myStudies__container">
             <div class="newStudies__wrapper">
               {% for host_study in host_studies %}
@@ -139,16 +147,27 @@
     {#내 코드 모음#}
     <section class="right_content-item__wrapper">
       <div>
-        <h1 class="profile-title profile-data" data-username="{{person.username}}">📝 에 제출한 내 코드</h1>
+        <h1 class="profile-title profile-data" data-username="{{person.username}}">📝 내가 제출한 코드</h1>
       </div>
 
       <!-- 리뷰 목록 -->
       <ul class="review-list">
         {% for review in reviews %}
-        <li class="review-ele">
-          <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
-          <span>{{ review.created_at }}</span>
-        </li>
+          <a href="{% url 'reviews:detail' review.problem.pk %}#myCode-{{person.pk}}" >
+            <li class="review-ele">
+              <div class="review-problem-title">
+                {{review.problem}}
+              </div>
+              <div class="review-tags__container">
+                {% for tag in review.tags.all|dictsort:'name' %}
+                  <button type="submit" class="tag-item">#{{ tag }}</button>
+                {% endfor %}
+              </div>
+              <div class="review-ele-footer">
+                <span>{{ review.created_at|date:"y/m/d" }}</span>
+              </div>
+            </li>
+          </a>
         {% endfor %}
       </ul>
       <!-- 페이지네이션 컨테이너 -->

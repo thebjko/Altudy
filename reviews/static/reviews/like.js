@@ -13,9 +13,15 @@ document.addEventListener('DOMContentLoaded', (x) => {
         'Content-Type': 'application/json',
       }
       axios.post(endpoint, data, {headers}).then((r) => {
-        swapText = r.data.swap_text
-        const inputEl = document.getElementById(`${objectIdentifier}`)
-        inputEl.value = `${swapText}`
+        const i = form.querySelector('i')
+        if (r.data.liked) {
+          i.setAttribute('class', 'bi bi-hand-thumbs-up-fill')
+          i.textContent = "코드 추천 취소"
+        } else {
+          i.setAttribute('class', 'bi bi-hand-thumbs-up')
+          i.textContent = "코드 추천"
+        }
+        document.getElementById(`like-count-${objectIdentifier}`).textContent = r.data.count
       }).catch((error) => {
         console.log(error.response)
       })

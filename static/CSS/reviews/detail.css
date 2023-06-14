@@ -2,19 +2,94 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 1024px;
+  padding: 0 32px;
+  margin: 50px auto 0;
+}
+
+@media screen and (max-width: 1023px) {
+  .main__container {
+    width: 100%;
+    max-width: 1024px;
+  }
 }
 
 /* 문제 */
 .probelm-box {
-  width: 600px;
+  width: 100%;
   height: auto;
-  padding: 10px;
   margin-top: 30px;
 }
 
+/* 유저 정보 */
 hgroup {
   padding: 10px;
-  border-bottom: 1px solid var(--color-gray-3);
+}
+
+.study__userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.study__userInfo-badge p{
+  font-size: 20px;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+
+  width: 30px;
+  height: 30px;
+}
+
+.study__userInfo-username {
+  font-size: var(--font-small);
+  color: var(--color-gray-6);
+  margin-left: 3px;
+}
+
+/* 문제 crud */
+.study__crudInfo{
+  margin-bottom: 1px;
+  display: flex;
+  justify-content: right;
+  color: var(--color-gray-4);
+  font-size: var(--font-micro);
+
+}
+
+.study__crudInfo-item{
+  background: inherit ; 
+  border:none; 
+  box-shadow:none; 
+  border-radius:0; 
+  padding:0; 
+  overflow:visible; 
+  cursor:pointer;
+
+  color: var(--color-gray-4);
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+.study__crudInfo + hr {
+  margin-top: 8px;
+}
+
+/* 문제 좋아요 개수 및 리뷰 개수 */
+.problem__info, .review__info {
+  padding: 10px;
+  padding-top: 0;
+  margin-left: 3px;
+}
+
+.problem__info i {
+  margin-right: 5px;
+  color: var(--color-gray-6);
+}
+
+.problem__info i span{
+  margin-left: 5px;
 }
 
 .probelm-content-box {
@@ -22,15 +97,49 @@ hgroup {
 }
 
 .problem-title {
-  margin-bottom: 10px;
-  font-size: var(--font-medium);
+  font-size: var(--font-xlarge);
   font-weight: var(--weight-bold);
+  margin-bottom: 10px;
 }
 
-.problem-description {
-  padding: 10px;
+.problem-url___container{
+  display: flex;
+  align-items: center;
 }
 
+.problem-url___container h3{
+  line-height: 20px;
+}
+
+.problem-url{
+  /* background-color: var(--color-white); */
+  color: var(--color-gray-6);
+  border-radius: 10px;
+  margin-left: 5px;
+}
+
+.problem-url:hover{
+  color: var(--color-green);
+  text-decoration: underline;
+}
+
+.separator {
+  width: 3px;
+  height: 20px;
+  background-color: var(--color-gray-3);
+
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+/* problem 내용 viewer */
+#viewer{
+  margin-top: 50px;
+  background-color: var(--color-white);
+  border-radius: 10px;
+  padding: 20px 15px;
+  margin: 30px 20px;
+}
 .problem-button-box {
   display: flex;
   justify-content: space-between;
@@ -39,13 +148,9 @@ hgroup {
   margin-top: 15px;
 }
 
-.submit-button {
+.submit-button__container {
   display: flex;
-  justify-content: center;
-  width: 500px;
-  height: auto;
-  margin: 0 auto;
-  padding: 10px;
+  justify-content: end;
 }
 
 /* 리뷰 */
@@ -56,9 +161,15 @@ hgroup {
   margin-top: 30px;
 }
 
-.review {
-  width: 600px;
-  border-top: 1px solid var(--color-gray-3);
+#reviewViewer {
+  background-color: var(--color-white);
+  border-radius: 10px;
+  padding: 20px 15px;
+  margin: 30px 20px;
+}
+
+.review__container {
+  width: 100%;
   padding: 10px 0;
 }
 
@@ -80,7 +191,99 @@ hgroup {
   padding: 10px 0;
 }
 
+.comment-create__container {
+  padding: 20px 15px;
+  margin: 30px 20px;
+  margin-bottom: 10px;
+}
+
+.form-control{
+  margin-bottom: 10px;
+  height: 80px;
+  resize: none;
+}
+.form-control:focus{
+  border-color:var(--color-lightgreen);
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(187,216,133,.25)
+}
+
+.review__info{
+  padding-left : 0;
+  padding-bottom: 2px;
+  margin-left: 0;
+  margin-top: 7px;
+}
+
+/* 댓글 */
+.comment-section{
+  border-radius: 10px;
+  padding: 10px 10px;
+}
+
+.comments__wrapper{
+  margin-top: 50px;
+  padding: 20px 15px;
+  margin: 20px 20px;
+}
+
+.comment__wrapper{
+  margin-bottom: 50px;
+}
+
+.comment-delete-btn{
+  color: red;
+}
+
+.comment-update-btn{
+  color: var(--color-gray-7)
+}
+
+.comment-ud__info {
+  display: none;
+}
+
+.comment__wrapper:hover .comment-ud__info{
+  height: 5px;
+  display: block;
+}
+
+.ud-button{
+  background-color: var(--color-gray-1);
+  color: var(--color-gray-7);
+  font-size: var(--font-micro);
+  box-shadow: 2px 2px 4px var(--color-gray-2);
+  margin-right: 10px;
+  padding: 5px 10px;
+}
+
+.comment__container .study__userInfo-username, .comment-user-info__container .study__userInfo-username{
+  background-color: var(--color-gray-5);
+  border-radius: 10px;
+  padding: 10px 15px;
+  color: var(--color-white);
+  font-size: var(--font-regular);
+  font-weight: var(--weight-semi-bold);
+}
+
+.comment-ud__info{
+  text-align: right;
+}
+.commentBtn__container{
+  display: flex;
+  justify-content: end;
+}
+
+.review-content__container{
+  background-color: var(--color-white);
+  padding: 10px 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+
 /* 리뷰 태그 */
+
 .tag-item {
   background-color: var(--color-white);
   font-size: var(--font-micro);
@@ -129,7 +332,12 @@ hgroup {
   color: var(--color-green);
 }
 
-#like-forms input[type="submit"] {
+#like-forms {
+  display: flex;
+  justify-content: end;
+}
+
+#like-forms button[type="submit"] {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,18 +346,40 @@ hgroup {
   margin: 0 10px;
   border: 1px solid var(--color-green);
   border-radius: var(--border-radius-soft);
-  background-color: var(--color-green);
+  background-color: var(--color-gray-6);
   color: var(--color-white);
   line-height: 30px;
+  
 }
 
-#like-forms input[type="submit"]:hover {
+#like-forms button[type="submit"]:hover {
   border: 1px solid var(--color-green);
   background-color: var(--color-white);
   color: var(--color-green);
 }
 
+#like-forms button[type="submit"] .bi::before{
+  margin-right: 5px;
+}
+
 .gray-button {
   border: none;
   background-color: var(--color-gray-6);
+}
+
+/* null 메시지 */
+.null-message{
+  text-align: center;
+  color: var(--color-gray-5);
+}
+
+/* tag */
+.problem-tag__container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.problem-tag__container button {
+  border: none;
+  margin-right: 3px;
 }

@@ -131,7 +131,7 @@ def profile(request, username):
     level = person.get_level()
     next_level_exp = person.get_next_level_exp(level)
 
-    reviews = Review.objects.filter(user=person)
+    reviews = Review.objects.filter(user=person).order_by('-created_at')
     # paginator = Paginator(reviews, 5) 
     # page_number = request.GET.get('page')
     # page_obj = paginator.get_page(page_number)

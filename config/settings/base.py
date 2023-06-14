@@ -28,6 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 INSTALLED_APPS = [
     'accounts',
+    'corsheaders',
     'reviews',
     'studies',
     'django_extensions',
@@ -59,6 +60,7 @@ TUI_EDITOR_LANGUAGE = ['ko']
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -140,9 +142,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
@@ -248,3 +247,12 @@ CELERY_BEAT_SCHEDULE = {
     #     'schedule': 20,
     # },
 }
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+# django-cors-headers
+CORS_ALLOWED_ORIGINS = [
+    'http://43.202.59.123',
+]

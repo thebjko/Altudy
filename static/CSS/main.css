@@ -1,3 +1,4 @@
+/* 배너 */
 .banner__container {
   width: 100%;
   height: 250px;
@@ -25,13 +26,19 @@
   right: 0;
   width: 50%;
   height: 100%;
-  background-color: var(--color-green);
+  background-color: #8DB83B;
   z-index: -1;
 }
 
 .bannerSwiper img {
   position: relative;
   z-index: 1;
+}
+
+/* 소개 */
+.intro {
+  width: 100%;
+  display: block;
 }
 
 #main__main {
@@ -66,30 +73,16 @@
   opacity: 0.7;
 }
 
-.studies__title {
-  font-size: var(--font-large);
-  font-weight: var(--weight-semi-bold);
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
 /* 모든 스터디 임의 스타일 */
 .all {
   margin-top: 100px;
-}
-
-.studies__title {
-  font-size: var(--font-large);
-  font-weight: var(--weight-semi-bold);
-  padding: 10px;
-  margin-bottom: 20px;
 }
 
 .all-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 100px 0;
+  margin: 150px 0;
   color: var(--color-gray-4);
   font-size: var(--font-regular);
 }
@@ -169,6 +162,17 @@ swiper-container {
 }
 
 /* 나의 스터디 */
+.myStudies__container {
+  padding-top: 20px;
+}
+
+.studies__title {
+  font-size: var(--font-large);
+  font-weight: var(--weight-semi-bold);
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 .newStudies__wrapper {
   display: flex;
   flex-flow: wrap;
@@ -178,16 +182,14 @@ swiper-container {
 
 .newStudies__container {
   width: 240px;
-
   height: 150px;
   background-color: var(--color-white);
   border-radius: var(--border-radius-soft);
   box-shadow: 5px 5px 10px lightgray;
   margin: 1px;
   margin-right: 50px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   padding: 10px 10px;
-
   position: relative;
 
 }

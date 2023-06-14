@@ -1,23 +1,14 @@
 {% load custom_filters %}
 
 
-<form id="like-forms" action="{% url 'reviews:like' %}" method="post" data-object-identifier="{{ obj|id }}">
+<form id="like-forms" action="{% url 'reviews:like' %}" data-object-identifier="{{ obj|id }}" hx-target="this">
   {% csrf_token %}
-  {% if user in obj.like_users.all %}
-    {% if obj|class == 'Problem' %}
-    <input type="submit" value="좋아요 취소" id="{{ obj|id }}">
-    {% elif obj|class == 'Review' %}
-    <input type="submit" value="좋아요 취소" id="{{ obj|id }}">
-    {% elif obj|class == 'Comment' %}
-    <input type="submit" value="좋아요 취소" id="{{ obj|id }}">
+  <input type="hidden" name="object-identifier" value="{{ obj|id }}">
+  <button type="submit">
+    {% if user in obj.like_users.all %}
+    <i class="bi bi-hand-thumbs-up-fill">코드 추천 취소</i>
+    {% else %}
+    <i class="bi bi-hand-thumbs-up">코드 추천</i>
     {% endif %}
-  {% else %}
-    {% if obj|class == 'Problem' %}
-    <input type="submit" value="좋아요" id="{{ obj|id }}">
-    {% elif obj|class == 'Review' %}
-    <input type="submit" value="좋아요" id="{{ obj|id }}">
-    {% elif obj|class == 'Comment' %}
-    <input type="submit" value="좋아요" id="{{ obj|id }}">
-    {% endif %}
-  {% endif %}
+  </button>
 </form>

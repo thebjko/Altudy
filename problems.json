@@ -1,0 +1,1 @@
+[{"model": "reviews.problem", "pk": 1, "fields": {"post_num": 1, "title": "6월 셋째주 문제입니다.", "user": 13, "url": "https://www.acmicpc.net/problem/1000", "description": "마감 기한 : 6/16(금)", "study": 14, "created_at": "2023-06-13T01:58:11.091Z", "updated_at": "2023-06-13T01:58:11.091Z", "like_users": []}}]

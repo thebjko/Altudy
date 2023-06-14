@@ -1,10 +1,15 @@
 <!-- 댓글 작성 form 입니다 -->
 <!-- reviews/templates/reviews/comments/create.html -->
-<div id="create-comment-on-{{ review.id }}" hx-target="#comment-list-{{ review.pk }}" hx-swap="innerHTML">
+<div id="create-comment-on-{{ review.id }}" hx-target="#comment-list-{{ review.pk }}" hx-swap="innerHTML" class="comment-create__container">
   <form hx-post="{% url 'reviews:comment_create' review.pk %}">
     {% with comment_form.content as content %}
+    <div class="comment-user-info__container">
+      <div class="study__userInfo">
+        <div class="study__userInfo-username">{{ request.user.emoji_username }}</div>
+      </div>
+    </div>
     <div class="form-group">
-      <textarea id="{{ content.id_for_label }}-{{ review.id }}" class="form-control my-3" placeholder="{{ content.label }}" name="{{ content.name }}"></textarea>
+      <textarea id="comment-textarea-{{ review.id }}" class="form-control" placeholder="{{ content.label }}" name="{{ content.name }}"></textarea>
     </div>
     {% endwith %}
     <div class="d-flex flex-row-reverse">

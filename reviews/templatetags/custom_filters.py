@@ -30,3 +30,8 @@ def get_id(obj):
 @register.filter('class')
 def get_class_name(obj):
     return obj.__class__.__name__
+
+
+@register.filter
+def sort_by_likes(queryset):
+    return sorted(queryset, key=lambda r: r.like_users.count(), reverse=True)

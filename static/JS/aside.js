@@ -1,6 +1,5 @@
-import { probSearch } from "./search.js";
-import { conditionChange } from "./conditionChange.js";
-
+import { probSearch } from './search.js';
+import { conditionChange } from './conditionChange.js';
 
 const asideItems = document.querySelectorAll('.aside__item');
 const rightContentContainer = document.querySelector(
@@ -8,7 +7,7 @@ const rightContentContainer = document.querySelector(
 );
 const currentURL = window.location.href;
 let activeItem = asideItems[0];
-activeItem.classList.add('active-item')
+activeItem.classList.add('active-item');
 
 asideItems.forEach((item) => {
   item.addEventListener('click', () => {
@@ -27,9 +26,9 @@ asideItems.forEach((item) => {
           rightContentContainer.innerHTML = content;
 
           if (contentPath === 'problem') {
-            probSearch()
-          } else if (contentPath === "member"){
-            conditionChange()
+            probSearch();
+          } else if (contentPath === 'member') {
+            conditionChange();
           }
         });
     }

@@ -11,6 +11,7 @@ from django.db.models import Count, Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
+from django.db import transaction
 # from rest_framework import status
 # from rest_framework.decorators import api_view, permission_classes
 # from rest_framework.permissions import IsAuthenticated
@@ -20,6 +21,7 @@ from taggit.models import Tag
 
 from .forms import ProblemForm, ReviewForm, CommentForm
 from .models import Problem, Review, Comment
+from .utils import render_HXResponse, HXResponse
 # from .serializers import CommentSerializer
 
 from studies.models import Study
@@ -161,6 +163,14 @@ def review_create(request, pk):
             review.user, review.problem = request.user, problem
             review.save()
             form.save_m2m() 
+
+            # 유저의 experience를 10 증가시킴
+            with transaction.atomic():
+                user = request.user
+                user.experience += 10
+                user.save()
+
+
             context = {
                 'problem': Problem.objects.get(pk=pk)
             }
@@ -257,10 +267,23 @@ def comment_create(request, review_pk):
             comment = form.save(commit=False)
             comment.user, comment.review = request.user, review
             comment.save()
+
+            # 작성한 유저에게 5의 경험치 추가
+            request.user.experience += 5
+            request.user.save()
             context = {
                 'review': review,
             }
-            return render(request, 'reviews/comments/list.html', context)
+            trigger = json.dumps({
+                'clear-textarea': {
+                    'textarea_id': f'comment-textarea-{review.pk}',
+                }, 
+                'recount': {
+                    'counter_id': f'comment-count-Review-{review.pk}',
+                    'count': review.comment_set.count(),
+                }
+            })
+            return render_HXResponse(request, 'reviews/comments/list.html', context, trigger=trigger)
         return render(request, 'reviews/components/comment_create_not_valid.html')   # 작성 필요
     else:
         form = CommentForm()
@@ -303,38 +326,53 @@ def comment_delete(request, comment_pk):
         Comment.objects.select_related('review'),
         pk=comment_pk
     )
+    review = comment.review
     context = {
-        'review': comment.review
+        'review': review
     }
     if request.user == comment.user:
         comment.delete()
-        return HttpResponse()
+        trigger = json.dumps({
+            'recount': {
+                'counter_id': f'comment-count-Review-{review.pk}',
+                'count': review.comment_set.count(),
+            }
+        })
+        return HXResponse(trigger=trigger)
+    
     return render(request, 'reviews/comments/item.html', context)
 
-    
+
 @login_required
 def like(request):
     try:
-        data = json.loads(request.body)
+        object_identifier = json.loads(request.body).get('objectIdentifier')
     except:
         raise Http404("Request not valid")
     
-    object_identifier = data.get('objectIdentifier')
     if object_identifier is not None:
         model, pk = object_identifier.split('-')
         if model not in {'Problem', 'Review', 'Comment'}:
             raise Http404("Request not valid")
         obj = get_object_or_404(eval(model), pk=pk)
+    else:
+        raise Http404("Request not valid")
 
-    # 조건문 추가해 Problem, Review, Comment 별로 swap_text 수정 가능
+
     if request.user in obj.like_users.all():
         obj.like_users.remove(request.user)
-        response = {
-            'swap_text': '좋아요',
+        context = {
+            'liked': False
         }
     else:
         obj.like_users.add(request.user)
-        response = {
-            'swap_text': '좋아요 취소',
+        context = {
+            'liked': True
         }
-    return JsonResponse(response)
+    context['count'] = obj.like_users.count()
+    return JsonResponse(context)
+
+
+def get_comment_count(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    return HttpResponse(review.comment_set.count())

@@ -12,14 +12,21 @@
 
 {% block content %}
 <div class="main__container">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <a href="{% url 'main' %}" class="homebutton button-small">< HOME</a>
+    {% if request.user in study.studying_users.all %}
+    <a href="{% url 'studies:mainboard' study.pk %}"><p class="mainboardbutton button-small">MAINBOARD ></p></a>
+    {% endif %}
+  </div>
+  <h1 class="main__container-title">{{ study.title }} 스터디 공지</h1>
   {% for announcement in announcements %}
   <a href="{% url 'studies:announcement_detail' study.pk announcement.pk %}">
-    <p class="content-box">[{{ announcement.pk }}] - {{ announcement.title }}</p>
+    <p class="content-box"><span>📌&nbsp&nbsp&nbsp</span>{{ announcement.title }}</p>
   </a>
   {% endfor %}
 
   {% if request.user == study.user %}
-  <a href="{% url 'studies:announcement_create' study.pk %}" style="color: blue;">
+  <a href="{% url 'studies:announcement_create' study.pk %}" style="display:flex; justify-content:center; color: blue;">
     <div class="button button-small">스터디 공지 생성</div>
   </a>
   {% endif %}

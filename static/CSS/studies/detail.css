@@ -193,6 +193,7 @@ article {
   align-items: center;
 }
 
+
 /* 버튼 */
 .homebutton {
   width: 90px;
@@ -251,6 +252,8 @@ article {
 .comment-btn {
   height: 36px;
   margin-bottom: 10px;
+  padding: 5px 10px;
+  background-color: var(--color-white);
 }
 
 .category-item {

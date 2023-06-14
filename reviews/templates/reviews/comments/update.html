@@ -2,18 +2,19 @@
 
 <!-- 댓글 업데이트를 위한 폼입니다 -->
 <!-- reviews/templates/reviews/comments/update.html -->
-<div class="d-flex justify-content-between">
-  <div>{{ comment.user }}</div>
-  <div>{{ comment.updated_at|date:"D d M Y" }}</div>
-</div>
-<form hx-put="{% url 'reviews:comment_update' comment.pk %}" hx-target="#comment-item-{{ comment.pk }}-on-{{ comment.review.pk }}" hx-swap="innerHTML">
-  {% with comment_form.content as content %}
-  <textarea id="{{ content.id_for_label }}-{{ comment.pk }}" class="form-control my-3" placeholder="{{ content.label }}" name="{{ content.name }}">{{ comment.content }}</textarea>
-  <div class="d-flex justify-content-between">
-    <div class="d-flex justify-content-around">
-      <button type="submit" class="button-small joinbutton">댓글 수정</button>
-      <button class="button-small joinbutton" hx-delete="{% url 'reviews:comment_delete' comment.pk %}" hx-target="#comment-item-{{ comment.pk }}-on-{{ comment.review.pk }}" hx-swap="outerHTML">댓글 삭제</button>
+<div class="comment__container">
+    <div class="study__userInfo" id="comment-{{ comment.pk}}">
+    <div class="study__userInfo-username">{{ comment.user.emoji_username }}</div>
     </div>
-  </div>
-  {% endwith %}
-</form>
+  <form hx-put="{% url 'reviews:comment_update' comment.pk %}" hx-target="#comment-item-{{ comment.pk }}-on-{{ comment.review.pk }}" hx-swap="innerHTML">
+    {% with comment_form.content as content %}
+    <textarea id="{{ content.id_for_label }}-{{ comment.pk }}" class="form-control" placeholder="{{ content.label }}" name="{{ content.name }}">{{ comment.content }}</textarea>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-around">
+        <button type="submit" class="button button-small ud-button">수정</button>
+        <button class="button button-small ud-button" hx-delete="{% url 'reviews:comment_delete' comment.pk %}" hx-target="#comment-item-{{ comment.pk }}-on-{{ comment.review.pk }}" hx-swap="outerHTML">삭제</button>
+      </div>
+    </div>
+    {% endwith %}
+  </form>
+</div>

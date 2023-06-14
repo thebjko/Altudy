@@ -253,24 +253,28 @@
     <div class="comment-container">
       <div class="comment-header">
         <div class="comment-header-top">
-          <p class="comment-user">{{ comment.user }}</p>         
-          {% if comment.user == request.user %}
-            <form action="" class="comment-update-form" data-study-id="{{ study.pk }}" data-comment-id="{{ comment.pk }}">
-              <button class="comment-update-btn" >
-                <i class="bi bi-pencil-square"></i>
-              </button>
-            </form>
-            <form action="{% url 'studies:comment_delete' study.pk comment.pk %}" method="post" class="comment-delete-form">
-              {% csrf_token %}
-              <button type="submit" class="comment-delete-btn">
-                <i class="bi bi-trash"></i>
-              </button>
-            </form>
-          {% endif %}
-        </div>
+          <p class="comment-user">{{ comment.user.emoji_username }}</p>
+          <div class="comment-user-ud__container">
+              {% if comment.user == request.user %}
+              <form action="" class="comment-update-form" data-study-id="{{ study.pk }}" data-comment-id="{{ comment.pk }}">
+                <button class="comment-update-btn" >
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+              </form>
+              <form action="{% url 'studies:comment_delete' study.pk comment.pk %}" method="post" class="comment-delete-form">
+                {% csrf_token %}
+                <button type="submit" class="comment-delete-btn">
+                  <i class="bi bi-x-circle"></i>
+                </button>
+              </form>
+              {% endif %}
+          </div>         
+          </div>
         <p class="comment-time">{{ comment.created_at_string }}</p>
       </div> 
-      <p id="comment-content-{{ comment.pk }}">{{ comment.content }}</p>
+      <div class="comment-body">
+        <p id="comment-content-{{ comment.pk }}">{{ comment.content }}</p>
+      </div>
     </div>
   </div>
   {% empty %}

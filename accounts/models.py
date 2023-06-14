@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 emoji_dict = {
     0: '🥚',
@@ -51,21 +52,25 @@ class User(AbstractUser):
     
     def get_progress_percentage(self):
         level = self.get_level()
-        current_exp = self.experience
+        current_exp = self.get_experience_from_level()
         next_level_exp = self.get_next_level_exp(level)
         
         if level == 5:
             return 100
         else:
-            progress_percentage = (current_exp / next_level_exp) * 100
-            return progress_percentage
+            progress_percentage = (current_exp/ next_level_exp) * 100
+            return int(progress_percentage)
         
 
     def get_experience_from_level(self):
         level = self.get_level()
-        prev_level_exp = self.get_next_level_exp(level -1)
-        current_level_exp = self.experience - prev_level_exp
-        return current_level_exp
+        level_thresholds = [0, 30, 90, 200, 500, 1000]
+
+        if level >= 0 and level < len(level_thresholds):
+            current_level_exp = self.experience - level_thresholds[level]
+            return current_level_exp if current_level_exp >= 0 else 0
+
+        return 0
 
 
     def get_next_level_exp(self, level):
@@ -75,3 +80,24 @@ class User(AbstractUser):
             return exp_thresholds[level + 1] - exp_thresholds[level]
 
         return 0
+    
+
+    def get_total_experience_up_to_level(self, level):
+        exp_thresholds = [0, 30, 90, 200, 500, 1000]
+
+        if level >= 0 and level < len(exp_thresholds):
+            return sum(exp_thresholds[:level+1])
+
+        return 0
+    
+    def get_previous_emoji(self):
+        level = self.get_level()
+        previous_level = level - 1
+        emoji = emoji_dict.get(previous_level, '')
+        return emoji
+
+    def get_next_emoji(self):
+        level = self.get_level()
+        next_level = level + 1
+        emoji = emoji_dict.get(next_level, '')
+        return emoji

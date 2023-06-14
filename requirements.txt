@@ -26,9 +26,11 @@ cryptography==41.0.1
 daphne==4.0.0
 decorator==5.1.1
 defusedxml==0.7.1
+distlib==0.3.6
 Django==3.2.18
 django-allauth==0.54.0
 django-appconf==1.0.5
+django-cors-headers==4.0.0
 django-debug-toolbar==4.1.0
 django-extensions==3.2.3
 django-htmx==1.14.0
@@ -39,10 +41,12 @@ django-storages==1.13.2
 django-taggit==4.0.0
 djangorestframework==3.14.0
 executing==1.2.0
+filelock==3.9.0
 graphene==3.2.2
 graphene-django==3.1.1
 graphql-core==3.2.3
 graphql-relay==3.2.0
+gunicorn==20.1.0
 hyperlink==21.0.0
 idna==3.4
 incremental==22.10.0
@@ -60,6 +64,8 @@ pexpect==4.8.0
 pickleshare==0.7.5
 pilkit==2.0
 Pillow==9.5.0
+pipenv==2022.12.19
+platformdirs==2.6.2
 promise==2.3
 prompt-toolkit==3.0.38
 ptyprocess==0.7.0
@@ -90,5 +96,7 @@ typing_extensions==4.6.3
 tzdata==2023.3
 urllib3==1.26.16
 vine==5.0.0
+virtualenv==20.17.1
+virtualenv-clone==0.5.7
 wcwidth==0.2.6
 zope.interface==6.0

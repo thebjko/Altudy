@@ -32,7 +32,7 @@
 .aside__container {
   width: 20%;
   min-width: 100px;
-  height: 500px;
+  height: 650px;
   background-color: var(--color-white);
   box-shadow: 2px 2px 4px var(--color-gray-4);
   border-radius: 10px;
@@ -344,6 +344,8 @@
 .problem-list li a {
   text-decoration: none;
   color: #333;
+  font-size: var(--font-small);
+  font-weight: var(--weight-semi-bold);
 }
 
 .problem-list li a:hover {
@@ -358,6 +360,18 @@
 .prob__create-btn-container {
   display: flex;
   justify-content: flex-end;
+}
+
+.problem-info-container span{
+  margin-left: 5px;
+  font-size: var(--font-micro);
+}
+.problem-info-container .bi{
+  margin-right: 3px;
+}
+
+.bi-code-square::before{
+  margin-right: 3px;
 }
 
 .prob__create-btn {

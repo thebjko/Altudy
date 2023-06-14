@@ -102,10 +102,11 @@ class AnnouncementForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={
                 'class':'title',
-                'placeholder': '제목을 입력해주세요',
+                'placeholder': '공지 제목을 입력해주세요',
             }),
             'content': forms.Textarea(attrs={
-                'class':'content'
+                'class':'content',
+                'placeholder': '공지 내용을 입력해주세요',
             }),
         }
         

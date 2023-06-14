@@ -102,6 +102,11 @@ class Studying(models.Model):
     
     permission = models.PositiveSmallIntegerField(default=1)
     joined_at = models.DateTimeField(auto_now_add=True)
+
+    last_access_date = models.DateField(blank=True, null=True)
+    def update_last_access_date(self):
+        self.last_access_date = timezone.now().date()
+        self.save()
     
     
 class Announcement(models.Model):

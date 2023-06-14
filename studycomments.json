@@ -1,0 +1,1 @@
+[{"model": "studies.studycomment", "pk": 1, "fields": {"study": 1, "user": 1, "content": "햇님반 화이팅 ! 헤헤", "created_at": "2023-06-13T01:09:20.027Z"}}, {"model": "studies.studycomment", "pk": 2, "fields": {"study": 14, "user": 13, "content": "알터디 못참아; 당장 가입 진행시켜@!$%", "created_at": "2023-06-13T02:07:03.390Z"}}]
