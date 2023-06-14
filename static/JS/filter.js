@@ -12,8 +12,9 @@ languageButtons.forEach((button) => {
     const langs = Array.from(selectedLangs).map((v) => v.dataset.lang).join(',')
     const recruits = toggleCheckbox.checked
     const query = searchParam('query')
+    const category = searchParam('category')
     try {
-      const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}`);
+      const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}&category=${category}`);
       console.log(response);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -36,8 +37,9 @@ selectedLanguagesContainer.addEventListener('click', async (e) => {
   const recruits = toggleCheckbox.checked
   console.log(langs)
   const query = searchParam('query')
+  const category = searchParam('category')
   try {
-    const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}`);
+    const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}&category=${category}`);
     console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -58,8 +60,9 @@ toggleCheckbox.addEventListener('change', async (e) => {
   const langs = Array.from(selectedLangs).map((v) => v.dataset.lang).join(',');
   const recruits = toggleCheckbox.checked // 토글 on이면 true 반환
   const query = searchParam('query')
+  const category = searchParam('category')
   try {
-    const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}`);
+    const response = await fetch(`/studies/?query=${query}&lang=${langs}&recruits=${recruits}&category=${category}`);
     console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

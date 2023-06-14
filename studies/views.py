@@ -18,10 +18,17 @@ import re
 # Create your views here.
 def index(request):
     query = request.GET.get('query')
+    category = request.GET.get('category')
     if query:
         studies = Study.objects.filter(
             Q(title__icontains=query)|Q(user__username__iexact=query)|
             Q(category__name__iexact=query)|Q(language__icontains=query)
+            ).annotate(
+            member_num=Count('studying_users')
+            ).order_by('-created_at')
+    elif category:
+        studies = Study.objects.filter(
+            category__name__iexact=category
             ).annotate(
             member_num=Count('studying_users')
             ).order_by('-created_at')
@@ -43,7 +50,6 @@ def index(request):
         studies = studies.filter(filter_query).distinct()
         print(studies)
     
-    category = request.GET.get('category')
     if category :
         studies = studies.filter(category__name__iexact=category)
 
