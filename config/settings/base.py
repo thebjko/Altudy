@@ -167,6 +167,9 @@ TAGGIT_TAGS_FROM_STRING = 'config.utils.custom_tag_string'
 TAGGIT_STRING_FROM_TAGS = 'config.utils.space_joiner'
 
 # -------- allauth --------
+## 배포환경 소셜로그인
+ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
+
 ## secret
 GITHUB_SECRET_KEY = os.getenv('GITHUB_SECRET_KEY')
 GOOGLE_EMAIL_SECRET_KEY = os.getenv('GOOGLE_EMAIL_SECRET_KEY')
